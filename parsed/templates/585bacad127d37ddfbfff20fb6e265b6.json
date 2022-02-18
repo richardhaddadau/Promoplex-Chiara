@@ -1,0 +1,3 @@
+{
+  "components/chiara/popup-banner": "<main>\n    {{{region name=\"page_builder_content--global\"}}}\n    {{{region name=\"page_builder_content\"}}}\n    <div>{{{page.content}}}</div>\n</main>"
+}

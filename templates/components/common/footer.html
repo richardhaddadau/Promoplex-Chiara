@@ -1,0 +1,500 @@
+{{#if banners.bottom_metadata}}
+    {{#if settings.data_tag_enabled}}
+        <div class="banners" data-banner-location="bottom">
+            {{#each (limit banners.bottom_metadata 1)}}
+                <div class="banner" data-event-type="promotion" data-entity-id="{{this.id}}" data-name="{{this.banner-name}}" data-position="{{this.location}}" data-name="{{this.banner-name}}">
+                    <div data-event-type="promotion-click">
+                        {{{this.content}}}
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    {{else}}
+        <div class="banners" data-banner-location="bottom">
+            <div class="banner">
+                {{#each (limit banners.bottom_metadata 1)}}
+                    {{{this.content}}}
+                {{/each}}
+            </div>
+        </div>
+    {{/if}}
+
+{{/if}}
+
+{{{region name="footer_before"}}}
+{{{region name="footer_before--global"}}}
+
+<footer class="footer" role="contentinfo">
+    {{#if settings.show_newsletter_box}}
+    {{#if theme_settings.footer_newsletter_position '===' 'top'}}
+    <div class="footer-newsletterTop">
+        <div class="container">
+            {{> components/chiara/common/footer-newsletter}}
+        </div>
+    </div>
+    {{/if}}
+    {{/if}}
+
+    {{{region name="footer_before_columns--global"}}}
+
+    <div class="container">
+        {{#block "chiara-footer-info"}}
+        <section class="footer-info">
+            <div class="footer-info-left">
+                {{#all theme_settings.footer_webpages_limit (if theme_settings.footer_webpages_limit '!=' '0')}}
+                <article class="footer-info-col footer-info-col--webpages" data-section-type="footer-webPages">
+                    <h5 class="footer-info-heading" 
+                        data-collapsible="footer-info-list-webpages"
+                        data-collapsible-disabled-breakpoint="medium"
+                        data-collapsible-disabled-state="open"
+                        data-collapsible-enabled-state="closed">{{theme_settings.footer_webpages_heading}}</h5>
+                    <ul class="footer-info-list" id="footer-info-list-webpages">
+                        {{#each (limit pages theme_settings.footer_webpages_limit)}}
+                        <li><a href="{{url}}">{{name}}</a></li>
+                        {{/each}}
+                    </ul>
+                    {{{region name="footer_below_pages--global"}}}
+                </article>
+                {{/all}}
+
+                {{#all theme_settings.footer_categories_limit (if theme_settings.footer_categories_limit '!=' '0')}}
+                <article class="footer-info-col footer-info-col--categories" data-section-type="footer-categories">
+                    <h5 class="footer-info-heading"
+                        data-collapsible="footer-info-list-categories"
+                        data-collapsible-disabled-breakpoint="medium"
+                        data-collapsible-disabled-state="open"
+                        data-collapsible-enabled-state="closed">{{theme_settings.footer_categories_heading}}</h5>
+                    <ul class="footer-info-list" id="footer-info-list-categories">
+                        {{#each (limit categories theme_settings.footer_categories_limit)}}
+                        <li><a href="{{url}}">{{name}}</a></li>
+                        {{/each}}
+                    </ul>
+                    {{{region name="footer_below_categories--global"}}}
+                </article>
+                {{/all}}
+
+                {{#all theme_settings.footer_brands_limit (if theme_settings.footer_brands_limit '!=' '0')}}
+                <article class="footer-info-col footer-info-col--brands" data-section-type="footer-brands">
+                    <h5 class="footer-info-heading"
+                        data-collapsible="footer-info-list-brands"
+                        data-collapsible-disabled-breakpoint="medium"
+                        data-collapsible-disabled-state="open"
+                        data-collapsible-enabled-state="closed">{{theme_settings.footer_brands_heading}}</h5>
+                    <ul class="footer-info-list" id="footer-info-list-brands">
+                        {{#each (limit shop_by_brand theme_settings.footer_brands_limit)}}
+                        <li><a href="{{url}}">{{name}}</a></li>
+                        {{/each}}
+                        <li><a href="{{urls.brands}}">{{lang 'brand.view_brands'}}</a></li>
+                    </ul>
+                    {{{region name="footer_below_brands--global"}}}
+                </article>
+                {{/all}}
+
+                {{#if theme_settings.footer_show_custom1}}
+                <article class="footer-info-col footer-info-col--custom1" data-section-type="footer-custom1">
+                    <h5 class="footer-info-heading"
+                        data-collapsible="footer-info-list-custom1"
+                        data-collapsible-disabled-breakpoint="medium"
+                        data-collapsible-disabled-state="open"
+                        data-collapsible-enabled-state="closed">{{theme_settings.footer_custom1_heading}}</h5>
+                    <ul class="footer-info-list" id="footer-info-list-custom1">
+                        {{#if theme_settings.footer_custom1_title1}}
+                        <li><a href="{{theme_settings.footer_custom1_link1}}">{{theme_settings.footer_custom1_title1}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.footer_custom1_title2}}
+                        <li><a href="{{theme_settings.footer_custom1_link2}}">{{theme_settings.footer_custom1_title2}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.footer_custom1_title3}}
+                        <li><a href="{{theme_settings.footer_custom1_link3}}">{{theme_settings.footer_custom1_title3}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.footer_custom1_title4}}
+                        <li><a href="{{theme_settings.footer_custom1_link4}}">{{theme_settings.footer_custom1_title4}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.footer_custom1_title5}}
+                        <li><a href="{{theme_settings.footer_custom1_link5}}">{{theme_settings.footer_custom1_title5}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.footer_custom1_title6}}
+                        <li><a href="{{theme_settings.footer_custom1_link6}}">{{theme_settings.footer_custom1_title6}}</a></li>
+                        {{/if}}
+                    </ul>
+                    {{{region name="footer_below_custom1--global"}}}
+                </article>
+                {{/if}}
+
+                {{#if theme_settings.footer_show_custom2}}
+                <article class="footer-info-col footer-info-col--custom2" data-section-type="footer-custom2">
+                    <h5 class="footer-info-heading"
+                        data-collapsible="footer-info-list-custom2"
+                        data-collapsible-disabled-breakpoint="medium"
+                        data-collapsible-disabled-state="open"
+                        data-collapsible-enabled-state="closed">{{theme_settings.footer_custom2_heading}}</h5>
+                    <ul class="footer-info-list" id="footer-info-list-custom2">
+                        {{#if theme_settings.footer_custom2_title1}}
+                        <li><a href="{{theme_settings.footer_custom2_link1}}">{{theme_settings.footer_custom2_title1}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.footer_custom2_title2}}
+                        <li><a href="{{theme_settings.footer_custom2_link2}}">{{theme_settings.footer_custom2_title2}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.footer_custom2_title3}}
+                        <li><a href="{{theme_settings.footer_custom2_link3}}">{{theme_settings.footer_custom2_title3}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.footer_custom2_title4}}
+                        <li><a href="{{theme_settings.footer_custom2_link4}}">{{theme_settings.footer_custom2_title4}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.footer_custom2_title5}}
+                        <li><a href="{{theme_settings.footer_custom2_link5}}">{{theme_settings.footer_custom2_title5}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.footer_custom2_title6}}
+                        <li><a href="{{theme_settings.footer_custom2_link6}}">{{theme_settings.footer_custom2_title6}}</a></li>
+                        {{/if}}
+                    </ul>
+                    {{{region name="footer_below_custom2--global"}}}
+                </article>
+                {{/if}}
+
+                {{#if theme_settings.footer_show_custom3}}
+                <article class="footer-info-col footer-info-col--custom3" data-section-type="footer-custom3">
+                    <h5 class="footer-info-heading"
+                        data-collapsible="footer-info-list-custom3"
+                        data-collapsible-disabled-breakpoint="medium"
+                        data-collapsible-disabled-state="open"
+                        data-collapsible-enabled-state="closed">{{theme_settings.footer_custom3_heading}}</h5>
+                    <ul class="footer-info-list" id="footer-info-list-custom3">
+                        {{#if theme_settings.footer_custom3_title1}}
+                        <li><a href="{{theme_settings.footer_custom3_link1}}">{{theme_settings.footer_custom3_title1}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.footer_custom3_title2}}
+                        <li><a href="{{theme_settings.footer_custom3_link2}}">{{theme_settings.footer_custom3_title2}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.footer_custom3_title3}}
+                        <li><a href="{{theme_settings.footer_custom3_link3}}">{{theme_settings.footer_custom3_title3}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.footer_custom3_title4}}
+                        <li><a href="{{theme_settings.footer_custom3_link4}}">{{theme_settings.footer_custom3_title4}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.footer_custom3_title5}}
+                        <li><a href="{{theme_settings.footer_custom3_link5}}">{{theme_settings.footer_custom3_title5}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.footer_custom3_title6}}
+                        <li><a href="{{theme_settings.footer_custom3_link6}}">{{theme_settings.footer_custom3_title6}}</a></li>
+                        {{/if}}
+                    </ul>
+                    {{{region name="footer_below_custom3--global"}}}
+                </article>
+                {{/if}}
+            </div>
+            {{#any settings.show_newsletter_box (if theme_settings.social_icon_placement_bottom '!==' 'bottom_none') theme_settings.footer_show_address}}
+            <div class="footer-info-right">
+                {{#if theme_settings.footer_show_address}}
+                <article class="footer-info-col footer-info-col--address" data-section-type="footer-webPages">
+                    {{{region name="footer_before_storeinfo--global"}}}
+                    <h5 class="footer-info-heading">{{> components/common/store-logo-footer}}</h5>
+                    <ul class="footer-info-list">
+                        {{#if settings.address}}
+                            <li><address>{{settings.address}}</address></li>
+                        {{/if}}
+                        {{#if theme_settings.contact_phone}}
+                            {{#if theme_settings.contact_phoneText}}
+                                <li><a href="tel:{{theme_settings.contact_phone}}">{{{theme_settings.contact_phoneText}}}</a></li>
+                            {{else}}
+                                <li><a href="tel:{{theme_settings.contact_phone}}">{{lang 'footer.call_us' phone_number=theme_settings.contact_phoneText}}</a></li>
+                            {{/if}}
+                        {{else}}
+                            {{#if settings.phone_number}}
+                                {{#if theme_settings.contact_phoneText}}
+                                    <li><a href="tel:{{settings.phone_number}}">{{{theme_settings.contact_phoneText}}}</a></li>
+                                {{else}}
+                                    <li><a href="tel:{{settings.phone_number}}">{{lang 'footer.call_us' phone_number=settings.phone_number}}</a></li>
+                                {{/if}}
+                            {{/if}}
+                        {{/if}}
+                        {{#if theme_settings.contact_email}}
+                            <li><a href="mailto:{{theme_settings.contact_email}}">{{theme_settings.contact_email}}</a></li>
+                        {{/if}}
+                        {{#if theme_settings.contact_link}}
+                            <li><a href="{{theme_settings.contact_link}}">{{{theme_settings.contact_linkText}}}</a></li>
+                        {{/if}}
+                    </ul>
+                    {{{region name="footer_below_storeinfo--global"}}}
+                </article>
+                {{/if}}
+                {{#if settings.show_newsletter_box}}
+                {{#if theme_settings.footer_newsletter_position '===' 'right'}}
+                    {{> components/chiara/common/footer-newsletter}}
+                {{/if}}
+                {{/if}}
+                {{#if theme_settings.social_icon_placement_bottom '!==' 'bottom_none'}}
+                <article class="footer-info-col footer-info-col--socials" data-section-type="newsletterSubscription">
+                    <h5 class="footer-info-heading">{{lang 'social.connect'}}</h5>
+                    {{> components/common/social-links}}
+
+                    {{{region name="footer_below_socials--global"}}}
+
+                    {{#if theme_settings.payment_icons_position '===' 'footer_right'}}
+                        <h5 class="footer-info-heading">{{lang 'footer.accept_payments'}}</h5>
+                        {{> components/common/payment-icons}}
+
+                        {{{region name="ssl_site_seal--global"}}}
+
+                        {{{region name="footer_below_payments--global"}}}
+                    {{/if}}
+                    
+                </article>
+                {{else if theme_settings.payment_icons_position '===' 'footer_right'}}
+                <article class="footer-info-col footer-info-col--socials" data-section-type="newsletterSubscription">
+                    <h5 class="footer-info-heading">{{lang 'footer.accept_payments'}}</h5>
+                    {{> components/common/payment-icons}}
+
+                    {{{region name="ssl_site_seal--global"}}}
+
+                    {{{region name="footer_below_payments--global"}}}
+                </article>
+                {{/if}}
+            </div>
+            {{/any}}
+        </section>
+        {{/block}}
+    </div>
+
+    {{{region name="footer_below_columns--global"}}}
+
+    {{#block "chiara-footer-copyright"}}
+    <div class="footer-copyright">
+        <div class="container">
+            {{#if theme_settings.payment_icons_position '===' 'copyright_left'}}
+            <section class="footer-icons">
+                {{> components/common/payment-icons}}
+
+                {{{region name="ssl_site_seal--global"}}}
+
+                {{{region name="footer_below_payments--global"}}}
+            </section>
+            {{/if}}
+                
+            {{#if theme_settings.show_copyright_footer}}
+                <p class="powered-by">&copy; {{moment format="YYYY"}} {{settings.store_name}}.</p>
+            {{/if}}
+            {{#if theme_settings.show_powered_by}}
+                <p class="powered-by">Powered by <a href="https://www.bigcommerce.com?utm_source=merchant&amp;utm_medium=poweredbyBC" rel="nofollow">BigCommerce</a>. Theme by <a href="https://papathemes.com?utm_source=merchant&amp;utm_medium=poweredbyBC" rel="nofollow">Papathemes</a>.</p>
+            {{/if}}
+
+            {{{region name="footer_below_copyright--global"}}}
+        </div>
+    </div>
+    {{/block}}
+</footer>
+
+{{{region name="footer_below--global"}}}
+
+{{#or (if theme_settings.bottomBar '===' 'top') (if theme_settings.bottomBar '===' 'bottom')}}
+<div class="navCatalog-panel" id="navCatalog-panel">
+    <p class="mobile-panel-heading"><span class="mobile-panel-heading-ellipse">{{lang 'category.label'}}</span></p>
+    <a class="mobile-panel-close" data-collapsible="navCatalog-panel" data-group-collapsible="main"><svg><use xlink:href="#icon-close" aria-hidden="true"></use></svg></a>
+    <div class="navCatalog-panel-body" data-lock-body-scroll>
+        <nav class="navPages navPages--catalogPanel">
+            <ul class="navPages-list">
+                {{#each categories}}
+                    <li class="navPages-item">
+                    {{> components/common/navigation-list-alternate theme_settings=../theme_settings idSuffix='-catalogPanel' noDepthMaxClass=true}}
+                    </li>
+                {{/each}}
+                
+                {{#if theme_settings.bottomBar_show_brands}}
+                    <li class="navPages-item navPages-item--brands">
+                        <a class="navPages-action has-subMenu is-root" href="{{url}}" data-collapsible="navPages-brands-root"
+                            {{#if theme_settings.navigation_hover}}
+                                data-collapsible-disabled-breakpoint="large"
+                                data-collapsible-disabled-state="open"
+                                data-collapsible-enabled-state="closed"
+                            {{/if}}
+                        >
+                            {{lang 'footer.brands'}} <i class="icon navPages-action-moreIcon" aria-hidden="true"><svg><use xlink:href="#icon-chevron-down" /></svg></i>
+                        </a>
+                        <div class="navPage-subMenu navPage-subMenu-horizontal" id="navPages-brands-root" aria-hidden="true" tabindex="-1">
+                            <ul class="navPage-subMenu-list">
+                                {{#each shop_by_brand}}
+                                    <li class="navPage-subMenu-item-child">
+                                        <a class="navPage-subMenu-action navPages-action" href="{{url}}">{{name}}</a>
+                                    </li>
+                                {{/each}}
+                                <li class="navPage-subMenu-item-parent">
+                                    <a class="navPage-subMenu-action navPages-action" href="{{urls.brands}}">{{lang 'brand.view_brands'}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {{/if}}
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<div class="bottomBar">
+    <ul class="bottomBar-list">
+        <li class="bottomBar-item">
+            <a class="bottomBar-action bottomBar-action--home" href="/">
+                <i class="bottomBar-item-icon"><svg><use xlink:href="#icon-home" /></svg></i>
+                <span class="bottomBar-item-label">{{lang 'bottom_bar.home'}}</span>
+            </a>
+        </li>
+        <li class="bottomBar-item">
+            <a class="bottomBar-action bottomBar-action--store" 
+                data-collapsible="navCatalog-panel" 
+                data-collapsible-disabled-breakpoint="medium"
+                data-collapsible-disabled-state="closed"
+                data-group-collapsible="main">
+                <i class="bottomBar-item-icon"><svg><use xlink:href="#icon-catalog" /></svg></i>
+                <span class="bottomBar-item-label">{{lang 'bottom_bar.store'}}</span>
+            </a>
+        </li>
+        <li class="bottomBar-item">
+            <a class="bottomBar-action bottomBar-action--account" id="navUser-more-toggle2" data-collapsible="navUser-more-panel" data-group-collapsible="main">
+                <i class="bottomBar-item-icon"><svg><use xlink:href="#icon-account" /></svg></i>
+                <span class="bottomBar-item-label">{{lang 'bottom_bar.account'}}</span>
+            </a>
+        </li>
+        <li class="bottomBar-item">
+            <a class="bottomBar-action bottomBar-action--contact" 
+                data-collapsible="bottomBar-contactPanel" 
+                data-collapsible-disabled-breakpoint="medium"
+                data-collapsible-disabled-state="closed"
+                data-group-collapsible="main">
+                <i class="bottomBar-item-icon"><svg><use xlink:href="#icon-location" /></svg></i>
+                <span class="bottomBar-item-label">{{lang 'bottom_bar.contact'}}</span>
+            </a>
+            <div class="bottomBar-contactPanel" id="bottomBar-contactPanel">
+                <ul>
+                    {{#if theme_settings.contact_email}}
+                    <li><a class="button button--primary button--small" href="mailto:{{theme_settings.contact_email}}">{{theme_settings.contact_email}}</a></li>
+                    {{/if}}
+                    {{#if theme_settings.contact_phone}}
+                        {{#if theme_settings.contact_phoneText}}
+                            <li><a class="button button--primary button--small" href="tel:{{theme_settings.contact_phone}}">{{{theme_settings.contact_phoneText}}}</a></li>
+                        {{else}}
+                            <li><a class="button button--primary button--small" href="tel:{{theme_settings.contact_phone}}">{{lang 'footer.call_us' phone_number=theme_settings.contact_phoneText}}</a></li>
+                        {{/if}}
+                    {{else}}
+                        {{#if settings.phone_number}}
+                            {{#if theme_settings.contact_phoneText}}
+                                <li><a class="button button--primary button--small" href="tel:{{settings.phone_number}}">{{{theme_settings.contact_phoneText}}}</a></li>
+                            {{else}}
+                                <li><a class="button button--primary button--small" href="tel:{{settings.phone_number}}">{{lang 'footer.call_us' phone_number=settings.phone_number}}</a></li>
+                            {{/if}}
+                        {{/if}}
+                    {{/if}}
+                    {{#if theme_settings.contact_link}}
+                        <li><a href="{{theme_settings.contact_link}}">{{{theme_settings.contact_linkText}}}</a></li>
+                    {{/if}}
+                </ul>
+            </div>
+        </li>
+        <li class="bottomBar-item">
+            <a class="bottomBar-action bottomBar-action--menu" data-mobile-menu-toggle="menu">
+                <i class="bottomBar-item-icon"><svg><use xlink:href="#icon-more" /></svg></i>
+                <span class="bottomBar-item-label">{{lang 'bottom_bar.more'}}</span>
+            </a>
+        </li>
+    </ul>
+</div>
+{{/or}}
+
+{{#or (if theme_settings.bottomBar '===' 'top') (if theme_settings.bottomBar '===' 'bottom') theme_settings.navUser_panel}}
+<div class="navUser-panel" id="navUser-more-panel">
+    <p class="navUser-panel-heading"><span class="navUser-panel-heading-ellipse">{{lang 'common.account'}}</span></p>
+    <a class="navUser-more-close" id="navUser-more-close" data-collapsible="navUser-more-panel" data-group-collapsible="main"><svg><use xlink:href="#icon-close" aria-hidden="true" /></svg></a>
+    <div class="navUser-panel-content" data-lock-body-scroll>
+        <ul class="navUser-section navUser-section--panel">
+
+            {{#if customer}}
+                <li class="navUser-item navUser-item--account">
+                    <a class="navUser-action" href="{{urls.account.index}}">{{lang 'common.account'}}</a>
+                </li>
+                <li class="navUser-item navUser-item--orders">
+                    <a class="navUser-action" href="{{urls.account.orders.all}}">{{lang 'account.nav.orders'}}</a>
+                </li>
+                {{#if settings.returns_enabled}}
+                <li class="navUser-item navUser-item--returns">
+                    <a class="navUser-action" href="{{urls.account.returns}}">{{lang 'account.nav.returns'}}</a>
+                </li>
+                {{/if}}
+                <li class="navUser-item navUser-item--messages">
+                    <a class="navUser-action" href="{{urls.account.inbox}}">{{#if customer.num_new_messages}}{{lang 'account.nav.messages' num_new_messages=customer.num_new_messages}}{{else}}{{lang 'account.mobile_nav.messages'}}{{/if}}</a>
+                </li>
+                <li class="navUser-item navUser-item--addresses">
+                    <a class="navUser-action" href="{{urls.account.addresses}}">{{lang 'account.nav.addresses'}}</a>
+                </li>
+                {{#if settings.show_payment_methods}}
+                <li class="navUser-item navUser-item--paymentMethods">
+                    <a class="navUser-action" href="{{urls.account.payment_methods.all}}">{{lang 'account.nav.payment_methods'}}</a>
+                </li>
+                {{/if}}
+                {{#if settings.show_wishlist}}
+                <li class="navUser-item navUser-item--wishlist">
+                    <a class="navUser-action" href="{{urls.account.wishlists.all}}">{{#if customer.num_wishlists}}{{lang 'account.nav.wishlists' num_wishlists=customer.num_wishlists}}{{else}}{{lang 'account.mobile_nav.wishlists'}}{{/if}}</a>
+                </li>
+                {{/if}}
+                <li class="navUser-item navUser-item--recentlyViewed">
+                    <a class="navUser-action" href="{{urls.account.recent_items}}">{{lang 'account.nav.recently_viewed'}}</a>
+                </li>
+                <li class="navUser-item navUser-item--settings">
+                    <a class="navUser-action" href="{{urls.account.details}}">{{lang 'account.nav.settings'}}</a>
+                </li>
+                <li class="navUser-item navUser-item--logout">
+                    <a class="navUser-action" href="{{urls.auth.logout}}">{{lang 'common.logout'}}</a>
+                </li>
+            {{else}}
+                <li class="navUser-item navUser-item--loginForm">
+                    <p class="navUser-item-heading">{{lang 'login.heading'}}</p>
+                    <form class="navUser-loginForm form" action="{{urls.auth.check_login}}" method="post" data-login-form>
+                        {{inject 'useValidEmail' (lang 'forms.validate.common.email_address')}}
+                        {{inject 'enterPass' (lang 'forms.validate.common.password')}}
+                        <div class="form-field">
+                            <label class="form-label" for="login_email">{{lang 'login.field_email'}}</label>
+                            <input class="form-input" name="login_email" id="login_email" type="email">
+                        </div>
+                        <div class="form-field">
+                            <label class="form-label" for="login_pass">{{lang 'login.field_password'}}</label>
+                            <input class="form-input" id="login_pass" type="password" name="login_pass">
+                        </div>
+                        <div class="form-actions">
+                            <input type="submit" class="button button--primary" value="{{lang 'login.submit_value' }}">
+                            <a class="forgot-password" href="{{urls.auth.forgot_password}}">{{lang 'login.forgot_password' }}</a>
+                            {{#if settings.account_creation_enabled}}
+                            <a class="create-account" href="{{urls.auth.create_account}}">{{lang 'login.new_customer.create_account' }}</a>
+                            {{/if}}
+                        </div>
+                    </form>
+                </li>
+            {{/if}}
+                
+            {{#if settings.gift_certificates_enabled}}
+                <li class="navUser-item navUser-item--giftCert">
+                    <a class="navUser-action" href="{{urls.gift_certificate.purchase}}">{{lang 'common.gift_cert'}}</a>
+                </li>
+            {{/if}}
+
+            {{#if customer.store_credit.value '>' 0}}
+                <li class="navUser-item navUser-item--storeCredit">
+                    <a class="navUser-action navUser-action--storeCredit"
+                    data-dropdown="storeCredit-dropdown"
+                    data-options="align:bottom"
+                    href="{{urls.cart}}">
+                            <span class="navUser-action-divider">{{lang 'common.store_credit_overview' credit=customer.store_credit.formatted}}</span>
+                    </a>
+                    <div class="dropdown-menu" id="storeCredit-dropdown" data-dropdown-content aria-hidden="true">
+                        {{{lang 'common.store_credit' store_credit=customer.store_credit.formatted}}}
+                    </div>
+                </li>
+            {{/if}}
+
+            {{> components/common/currency-selector}}
+
+            {{#if theme_settings.social_icon_placement_top}}
+                <li class="navUser-item navUser-item--social">
+                    {{> components/common/social-links}}
+                </li>
+            {{/if}}
+        </ul>
+    </div>
+</div>
+{{/or}}

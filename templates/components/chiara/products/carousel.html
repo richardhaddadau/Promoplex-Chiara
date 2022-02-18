@@ -1,0 +1,49 @@
+{{!
+    Parameters:
+    - products
+    - columns
+    - columns_sm
+    - columns_md
+}}
+<section class="productCarousel"
+    data-slick='{
+        "dots": false,
+        "arrows": true,
+        "infinite": true,
+        "mobileFirst": true,
+        "slidesToShow": {{#if columns_sm}}{{columns_sm}}{{else}}2{{/if}},
+        "slidesToScroll": 1,
+        "autoplay": true,
+        "autoplaySpeed": 3000,
+        "useTransform": false, {{! Fix for IE10+ }}
+        "responsive": [
+            {
+                "breakpoint": 1260,
+                "settings": {
+                    "slidesToScroll": 1,
+                    "slidesToShow": {{ columns }}
+                }
+            },
+            {
+                "breakpoint": 800,
+                "settings": {
+                    "slidesToScroll": 1,
+                    "slidesToShow": {{ columns }}
+                }
+            },
+            {
+                "breakpoint": 550,
+                "settings": {
+                    "slidesToScroll": 1,
+                    "slidesToShow": {{#if columns_sm}}{{add (toInt columns_sm) 1}}{{else}}{{ columns }}{{/if}}
+                }
+            }
+        ]
+    }'
+    {{#if settings.data_tag_enabled}} data-list-name="{{{list}}}"{{/if}}>
+    {{#each products}}
+    <div class="productCarousel-slide">
+        {{>components/products/card show_rating=../settings.show_product_rating settings=../settings theme_settings=../theme_settings customer=../customer show_wishlist=../settings.show_wishlist event="list" urls=../urls}}
+    </div>
+    {{/each}}
+</section>

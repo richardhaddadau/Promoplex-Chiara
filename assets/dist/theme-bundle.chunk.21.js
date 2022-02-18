@@ -1,0 +1,2 @@
+(window.webpackJsonpWebpackChiara=window.webpackJsonpWebpackChiara||[]).push([[21],{545:function(n,a,o){"use strict";o.r(a);var e=o(603),i=o.n(e);o.d(a,"PhotoSwipe",(function(){return i.a}));var r=o(604),t=o.n(r);o.d(a,"PhotoSwipeUI_Default",(function(){return t.a}))}}]);
+//# sourceMappingURL=theme-bundle.chunk.21.js.map

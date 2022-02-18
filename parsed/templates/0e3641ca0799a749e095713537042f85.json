@@ -1,0 +1,3 @@
+{
+  "components/category/include-sidebar-toggle": "<a class=\"mobileSidebar-toggle\" href=\"#\" \n    data-collapsible=\"mobileSidebar-panel\" \n    data-collapsible-disabled-breakpoint=\"medium\"\n    data-collapsible-disabled-state=\"closed\"\n    data-group-collapsible=\"main\">\n    <span class=\"is-srOnly\">{{lang 'search.faceted.show-filters'}}</span>\n    <i class=\"icon on\" aria-hidden=\"true\">{{lang 'search.faceted.toggle_on'}}</i>\n    <i class=\"icon off\" aria-hidden=\"true\"><svg><use xlink:href=\"#icon-close\" /></svg></i>\n</a>"
+}

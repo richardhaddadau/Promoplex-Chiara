@@ -1,0 +1,72 @@
+{{#if children}}
+<a class="navPages-action has-subMenu{{#if is_active}} activePage{{/if}}" href="{{url}}" data-collapsible="navPages-{{id}}"
+    {{#if theme_settings.navigation_hover}}
+        data-collapsible-disabled-breakpoint="large"
+        data-collapsible-disabled-state="open"
+        data-collapsible-enabled-state="closed"
+    {{/if}}
+>
+    {{name}} <i class="icon navPages-action-moreIcon" aria-hidden="true"><svg><use xlink:href="#icon-chevron-down" /></svg></i>
+</a>
+<div class="navPage-subMenu" id="navPages-{{id}}" aria-hidden="true" tabindex="-1">
+    {{#if @root.in_development}}
+        <div data-content-region="navPages_{{id}}_left--global">
+            <img src="https://via.placeholder.com/150x150">
+        </div>
+    {{else}}
+        {{{region name=(concat (concat "navPages_" id) "_left--global")}}}
+    {{/if}}
+    <ul class="navPage-subMenu-list">
+        <li class="navPage-subMenu-item">
+            <a class="navPage-subMenu-action navPages-action" href="{{url}}">{{{lang 'category.view_all.name' category=name}}}</a>
+        </li>
+        {{#each children}}
+            <li class="navPage-subMenu-item">
+                {{#if @root.in_development}}
+                    <div data-content-region="navPages_{{id}}_top--global">
+                        <img src="https://via.placeholder.com/220x100">
+                    </div>
+                {{else}}
+                    {{{region name=(concat (concat "navPages_" id) "_top--global")}}}
+                {{/if}}
+                {{#if children}}
+                    <a
+                        class="navPage-subMenu-action navPages-action has-subMenu{{#if is_active}} activePage{{/if}}"
+                        href="{{url}}"
+                        data-collapsible="navPages-{{id}}"
+                        data-collapsible-disabled-breakpoint="medium"
+                        data-collapsible-disabled-state="open"
+                        data-collapsible-enabled-state="closed">
+                        {{name}} <i class="icon navPages-action-moreIcon" aria-hidden="true"><svg><use xlink:href="#icon-chevron-down" /></svg></i>
+                    </a>
+                    <ul class="navPage-childList" id="navPages-{{id}}">
+                        {{#each children}}
+                        <li class="navPage-childList-item">
+                            <a class="navPage-childList-action navPages-action{{#if is_active}} activePage{{/if}}" href="{{url}}">{{name}}</a>
+                        </li>
+                        {{/each}}
+                    </ul>
+                {{else}}
+                    <a class="navPage-subMenu-action navPages-action{{#if is_active}} activePage{{/if}}" href="{{url}}">{{name}}</a>
+                {{/if}}
+                {{#if @root.in_development}}
+                    <div data-content-region="navPages_{{id}}_bottom--global">
+                        <img src="https://via.placeholder.com/220x100">
+                    </div>
+                {{else}}
+                    {{{region name=(concat (concat "navPages_" id) "_bottom--global")}}}
+                {{/if}}
+            </li>
+        {{/each}}
+    </ul>
+    {{#if @root.in_development}}
+        <div data-content-region="navPages_{{id}}_right--global">
+            <img src="https://via.placeholder.com/150x150">
+        </div>
+    {{else}}
+        {{{region name=(concat (concat "navPages_" id) "_right--global")}}}
+    {{/if}}
+</div>
+{{else}}
+<a class="navPages-action{{#if is_active}} activePage{{/if}}" href="{{url}}">{{name}}</a>
+{{/if}}

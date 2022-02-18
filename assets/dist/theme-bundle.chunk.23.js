@@ -1,0 +1,2 @@
+(window.webpackJsonpWebpackChiara=window.webpackJsonpWebpackChiara||[]).push([[23],{538:function(t,r,n){"use strict";function o(t,r){return(o=Object.setPrototypeOf||function(t,r){return t.__proto__=r,t})(t,r)}n.r(r),n.d(r,"default",(function(){return e}));var e=function(t){var r,n;function e(){return t.apply(this,arguments)||this}return n=t,(r=e).prototype=Object.create(n.prototype),r.prototype.constructor=r,o(r,n),e}(n(57).a)}}]);
+//# sourceMappingURL=theme-bundle.chunk.23.js.map

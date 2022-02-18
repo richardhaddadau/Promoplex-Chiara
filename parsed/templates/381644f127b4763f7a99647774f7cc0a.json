@@ -1,0 +1,3 @@
+{
+  "components/carousel-video": "{{inject 'hasCarouselVideo' true}}\n<div class=\"heroCarousel-video\"{{#if image_width}} style=\"width: {{image_width}}px\"{{/if}}><div data-youtube=\"{{video}}\"></div></div>"
+}
