@@ -1,0 +1,57 @@
+<form action="" class="pleximisation-details-form">
+    
+    <h2>Your Details</h2>
+    <div class="pleximisation-form-group">
+        <input type="text" class="form-input" name="plex-firstname" id="" placeholder="*First Name" required>
+        <input type="text" class="form-input" name="plex-lastname" id="" placeholder="*Last Name" required>
+    </div>
+    
+    <div class="pleximisation-form-group">
+        <input type="text" class="form-input" name="plex-company" id="" placeholder="Company Name" required>
+        <input type="email" class="form-input" name="plex-email" id="" placeholder="*Email Address" required>
+    </div>
+
+    <div class="pleximisation-form-group">
+        <input type="tel" class="form-input" name="plex-phone" id="" placeholder="Phone Number (Format: 07 1234 5678)" pattern="[0-9]{10}" maxlength="10">
+        <input type="tel" class="form-input" name="plex-mobile" id="" placeholder="Mobile Number (Format: 0412 345 678)" pattern="[0-9]{10}" maxlength="10">
+    </div>
+
+    <div class="pleximisation-form-group">
+        <input type="text" class="form-input" name="plex-address" id="" placeholder="Street Address">
+        <input type="text" class="form-input" name="plex-suburb" id="" placeholder="Suburb">
+    </div>
+
+    <div class="pleximisation-form-group">
+        <input type="number" class="form-input" name="plex-postcode" id="" placeholder="*Postcode" maxlength="4">
+        <input type="text" class="form-input" name="plex-state" id="" placeholder="*State">
+    </div>
+
+    <div class="pleximisation-form-group">
+        <textarea class="form-input" name="plex-comments" id="" cols="30" rows="6" placeholder="Please add any extra information that may help us provide you with an accurate quote"></textarea>
+    </div>
+
+    <div class="pleximisation-notes">
+        <p class="pleximisation-body-text">A maximum of 4 files are allowed to be uploaded.<br>
+            The total accumulated size of the files must be under 10 MB<br>
+            with each individual file size being less than or equal to 3 MB each</p>
+        <p class="pleximisation-body-text">The uploaded files must be <span class="pleximisation-highlight">svg, eps, pdf</span>, png or jpg.<br>
+            Formats in orange are preferred.</p>
+    </div>
+
+    <div class="cart-actions" style="margin: auto;">
+        <a class="button button--secondary" href="{{urls.checkout.single_address}}" title="Click here to submit your quote request">
+            Upload Decoration Files
+        </a>
+    </div>
+
+    <div class="pleximisation-notes">
+        <p class="pleximisation-body-text">This quote request is free. No upfront payment required.</p>
+    </div>
+
+    <div class="cart-actions" style="margin: auto;">
+        <a class="button button--primary" href="{{urls.checkout.single_address}}" title="Click here to submit your quote request">
+            Request Quote
+        </a>
+    </div>
+
+</form>

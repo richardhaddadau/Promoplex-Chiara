@@ -1,0 +1,179 @@
+//  PRODUCTS PAGE
+//  PRODUCTS PAGE
+//  PRODUCTS PAGE
+#pleximisation-block {
+    font-size: 1rem;
+}
+
+#pleximisation-block select {
+    padding: 10px;
+    padding-right: 35px;
+}
+
+.pleximisation-selections {
+    display: flex;
+
+    margin-bottom: 5px;
+
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.pleximisation-add, .pleximisation-delete {
+    cursor: pointer;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    min-height: 40px;
+    border: 1px solid #7a7a7a;
+
+    transition: all 0.15s ease;
+}
+
+.pleximisation-add {
+    margin-bottom: 15px;
+}
+
+.pleximisation-selections .pleximisation-box {
+    margin-right: 15px;
+    flex-grow: 2;
+}
+
+.pleximisation-delete {
+    cursor: pointer;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    
+    min-width: 45px;
+    min-height: 100%;
+
+    border: 1px solid #7a7a7a;
+
+    transition: all 0.15s ease;
+}
+
+.pleximisation-add:hover, .pleximisation-delete:hover {
+    color: white;
+}
+
+.pleximisation-add:hover {
+    background-color: #ea4f24;
+    border-color: #ea4f24;
+}
+
+.pleximisation-delete:hover {
+    background-color: #bc0606;
+    border-color: #bc0606;
+}
+
+.pleximisation-pricing {
+    margin-top: 20px;
+    border: 1px solid #ddd;
+}
+
+.pleximisation-charges {
+    background-color: #ddd
+}
+
+.pleximisation-quantity, .pleximisation-individual-price, .pleximisation-setup-fee, .pleximisation-total-price {
+    display: flex;
+    padding: 7.5px 20px;
+
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.pleximisation-pricing-category {
+    width: 60%
+}
+
+.pleximisation-pricing-unit {
+    width: 35%;
+    text-align: right;
+}
+
+.pleximisation-pricing .pleximisation-total-price {
+    padding: 10px 20px;
+
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+// CART PAGE
+// CART PAGE
+// CART PAGE
+.pleximisation-cart-totals {
+    display: flex;
+    position: relative;
+
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    width: 100%;
+}
+
+.pleximisation-cart-totals .cart-totals {
+    margin: inherit;
+}
+
+.pleximisation-form-group {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+    justify-content: space-between;
+}
+
+.pleximisation-form-group .form-input {
+    margin: 10px;
+    width: auto;
+
+    flex-grow: 1;
+}
+
+.pleximisation-details-form .button {
+    margin-top: 10px;
+}
+
+.pleximisation-details-form .button:hover {
+    background-color: #EA4F24;
+    border-color: #EA4F24;
+    color: white;
+}
+
+.pleximisation-highlight {
+    color: #EA4F24;
+    font-weight: bold;
+}
+
+.pleximisation-notes {
+    display: block;
+    position: relative;
+
+    margin: auto;
+    margin-top: 20px;
+    padding: 0;
+
+    width: 600px;
+    max-width: 95%;
+}
+
+.pleximisation-body-text {
+    text-align: center;
+}
+
+@media screen and (max-width: 700px) {
+    .pleximisation-form-group .form-input {
+        width: 100%;
+    }
+}

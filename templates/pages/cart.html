@@ -13,39 +13,28 @@ cart: true
             {{> components/cart/status-messages}}
         </div>
 
-        {{#if cart.items.length}}
+            <!-- Move cart.items.length check here -->
             <div class="loadingOverlay"></div>
 
             <div data-cart-content>
-                {{> components/cart/content}}
+                <!-- 1VINE - START PLEXIMISATIONS -->
+                {{> components/pleximisations/cart/content}}
+                <!-- 1VINE - END PLEXIMISATIONS -->
             </div>
 
             <div data-cart-totals>
-                {{> components/cart/totals}}
+                <!-- 1VINE - START PLEXIMISATIONS -->
+                {{> components/pleximisations/cart/totals}}
+                <!-- 1VINE - END PLEXIMISATIONS -->
             </div>
 
-            {{#if cart.show_primary_checkout_button}}
-                <div class="cart-actions">
-                    <a class="button button--primary" href="{{urls.checkout.single_address}}" title="{{lang 'cart.checkout.title'}}">{{lang 'cart.checkout.button'}}</a>
-                    {{#if cart.show_multiple_address_shipping}}
-                        <a class="checkoutMultiple" href="{{urls.checkout.multiple_address}}">
-                            {{lang 'cart.preview.checkout_multiple'}}
-                        </a>
-                    {{/if}}
-                </div>
-            {{else}}
-                <div class="cart-actions">
-                    <a class="button" href="{{urls.home}}" title="{{lang 'cart.continue_shopping'}}">{{lang 'cart.continue_shopping'}}</a>
-                </div>
-            {{/if}}
+            <!-- 1VINE - START PLEXIMISATIONS -->
+            {{> components/pleximisations/cart/cart-form}}
+            <!-- 1VINE - END PLEXIMISATIONS -->
 
-            {{#if cart.additional_checkout_buttons}}
-                <div class="cart-additionalCheckoutButtons">
-                    {{#each cart.additional_checkout_buttons}}
-                        {{{this}}}
-                    {{/each}}
-                </div>
-            {{/if}}
+            <!-- Move line below to above -->
+            {{#if cart.items.length}}
+
         {{else}}
             <h3>{{lang 'cart.checkout.empty_cart'}}</h3>
             {{{ remote_api_scripts }}}

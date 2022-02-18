@@ -415,11 +415,19 @@
                                 {{/if}}
                             </div>
                         </div>
+
+                        <!-- 1VINE - START INSTRUCTION -->
+                        <h5><strong>STEP 1</strong> - <span style="text-transform: none;">Enter a Quantity</span></h5>
+                        <!-- 1VINE - END INSTRUCTION -->
     
                         {{#if theme_settings.show_product_quantity_box}}
                             {{> components/products/qty-box}}
                         {{/if}}
                     </div>
+
+                    <!-- 1VINE - START PLEXIMISATIONS -->
+                    {{> components/pleximisations/products/product-customisations}}
+                    <!-- 1VINE - END PLEXIMISATIONS -->
 
                     <div class="alertBox productAttributes-message" style="display:none">
                         <div class="alertBox-column alertBox-icon">
@@ -428,6 +436,7 @@
                         <p class="alertBox-column alertBox-message"></p>
                     </div>
                     {{{snippet 'product_addtocart'}}}
+
                     {{#if product.out_of_stock}}
                         {{#if product.out_of_stock_message}}
                             {{>components/common/alert-error product.out_of_stock_message}}
@@ -442,7 +451,13 @@
                 </div>
 
                 {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
-                    {{> components/products/purchase-buttons}}
+
+                    <!-- 1VINE - START PLEXIMISATIONS -->
+                    <div class="form-action-group _addToCartVisibility">
+                        <input id="addToQuoteBtn" data-wait-message="Add to Quote" class="button button--primary" type="button" value="Add to Quote" />
+                    </div>
+                    <!-- 1VINE - END PLEXIMISATIONS -->
+                    
                 {{/or}}
             </form>
         </div>
