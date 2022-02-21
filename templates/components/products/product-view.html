@@ -453,9 +453,7 @@
                 {{#or customer (if theme_settings.restrict_to_login '!==' true)}}
 
                     <!-- 1VINE - START PLEXIMISATIONS -->
-                    <div class="form-action-group _addToCartVisibility">
-                        <input id="addToQuoteBtn" data-wait-message="Add to Quote" class="button button--primary" type="button" value="Add to Quote" />
-                    </div>
+                    {{> components/pleximisations/products/purchase-buttons}}
                     <!-- 1VINE - END PLEXIMISATIONS -->
                     
                 {{/or}}
