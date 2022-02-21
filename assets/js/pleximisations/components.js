@@ -9,6 +9,8 @@ const plexObj = {
     orderTotal: 0,
 
     pleximisationFees: {},
+
+    productOptions: [],
 };
 
 // id: Options Name, Extra Per Unit, Extra Setup Fee
@@ -33,9 +35,9 @@ const generateRandomID = () =>
 // Generate random three-figure number
      `${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`;
 
-// eslint-disable-next-line no-unused-vars
 const addtoQuote = () => {
     const quoteObject = plexObj;
+
     const productObject = {
         id: document.querySelector('#pleximisation-product-id').value,
         imageURL: document.querySelector('#pleximisation-product-image').value,
@@ -43,8 +45,6 @@ const addtoQuote = () => {
         brandURL: document.querySelector('#pleximisation-product-brand-url').value,
         title: document.querySelector('#pleximisation-product-title').value,
         sku: document.querySelector('#pleximisation-product-sku').value,
-        // colour: ,
-        // size: ,
     };
 
     const toAddObject = {
@@ -53,17 +53,30 @@ const addtoQuote = () => {
         'product-brand': productObject.brand,
         'product-title': productObject.title,
         'product-sku': productObject.sku,
-        'product-colour': productObject.colour,
-        'product-size': productObject.size,
-        'price-per-unit': quoteObject.pricePerUnit,
-        'setup-fees': quoteObject.setupFees,
-        quantity: quoteObject.quantity,
-        total: quoteObject.total,
+
+        'price-per-unit': quoteObject.orderPPU,
+        'setup-fees': quoteObject.orderSetup,
+        quantity: quoteObject.orderQty,
+        total: quoteObject.orderTotal,
+
+        // 'product-colour': productObject.colour,
+        // 'product-size': productObject.size,
+
+        pleximisations: [],
     };
+
+    let x = 1;
+
+    for (const item in quoteObject.pleximisationFees) {
+        if (quoteObject.pleximisationFees[item]) {
+            toAddObject.pleximisations.push(`${x}: ${quoteObject.pleximisationFees[item][2]}`);
+            x++;
+        }
+    }
 
     const cartItemID = `PXciID${generateRandomID()}`;
 
-    sessionStorage.setItem(cartItemID, toAddObject);
+    sessionStorage.setItem(cartItemID, JSON.stringify(toAddObject));
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -222,6 +235,7 @@ const changePleximisation = (e) => {
 
     plexObj.pleximisationFees[idKey][0] = pleximisationOptions[e.options[e.selectedIndex].dataset.index][1];
     plexObj.pleximisationFees[idKey][1] = pleximisationOptions[e.options[e.selectedIndex].dataset.index][2];
+    plexObj.pleximisationFees[idKey][2] = pleximisationOptions[e.options[e.selectedIndex].dataset.index][0];
 
     updateChargesBlock();
 };
@@ -237,18 +251,20 @@ window.addEventListener('load', () => {
 
     loadPleximisations();
     updateChargesBlock();
-});
 
-document.querySelector('.form-input.form-input--incrementTotal').addEventListener('change', () => {
-    updateChargesBlock();
-});
-
-document.querySelector('#addToQuoteBtn').addEventListener('click', () => {
-    addtoQuote();
-});
-
-for (let i = 0; i < document.querySelectorAll('.form-increment .button.button--icon').length; i++) {
-    document.querySelectorAll('.form-increment .button.button--icon')[i].addEventListener('click', () => {
+    document.querySelector('.form-input.form-input--incrementTotal').addEventListener('change', () => {
         updateChargesBlock();
     });
-}
+
+    for (let i = 0; i < document.querySelectorAll('.form-option').length; i++) {
+        document.querySelectorAll('.form-option')[i].addEventListener('click', () => {
+            // updateChargesBlock();
+        });
+    }
+
+    for (let i = 0; i < document.querySelectorAll('.form-increment .button.button--icon').length; i++) {
+        document.querySelectorAll('.form-increment .button.button--icon')[i].addEventListener('click', () => {
+            updateChargesBlock();
+        });
+    }
+});

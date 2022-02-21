@@ -1,15 +1,13 @@
 <!-- 1VINE - START PLEXIMISATION -->
-<!-- 1VINE - START PLEXIMISATION -->
-<!-- 1VINE - START PLEXIMISATION -->
 <h5><strong>STEP 2</strong> - <span style="text-transform: none;">Select a Customisation</span></h5>
 
 <script src="https://kit.fontawesome.com/6b60be86d6.js" crossorigin="anonymous"></script>
+<script src="../../../assets/js/pleximisations/components.js"></script>
 
 <div id="pleximisation-block">
     <div class="pleximisation-add" onclick="addPleximisation()"><i class="fa-solid fa-plus"></i></div>
     <div id="pleximisation-options"></div>
 
-    <script src="../../../assets/js/pleximisations/components.js"></script>
 
     <div class="pleximisation-pricing">
 
@@ -33,22 +31,41 @@
         </div>
         
         <div class="pleximisation-total-price">
-            <div class="pleximisation-pricing-category">Estimated Total:</div>
+            <div id="pleximisation-id-total" class="pleximisation-pricing-category">Estimated Total:</div>
             <div class="pleximisation-pricing-unit">$</div>
         </div>
 
-        <input type="text" id="pleximisation-product-id" value={{product.id}}>
-        <input type="text" id="pleximisation-product-image" value={{product.main_image.data}}>
-        <input type="text" id="pleximisation-product-brand" value={{product.brand.name}}>
-        <input type="text" id="pleximisation-product-brand-url" value={{product.brand.url}}>
-        <input type="text" id="pleximisation-product-title" value={{product.title}}>
-        <input type="text" id="pleximisation-product-sku" value={{product.sku}}>
-        <!-- <input type="text" id="pleximisation-product-title" value={{product.customizations}}> -->
+        <input type="text" id="pleximisation-product-id" value='{{product.id}}'>
+        <input type="text" id="pleximisation-product-image" value='{{product.main_image.data}}'>
+        <input type="text" id="pleximisation-product-brand" value='{{product.brand.name}}'>
+        <input type="text" id="pleximisation-product-brand-url" value='{{product.brand.url}}'>
+        <input type="text" id="pleximisation-product-title" value='{{product.title}}'>
+        <input type="text" id="pleximisation-product-sku" value='{{product.sku}}'>
+
+        <script>
+            let currentVariation;
+        </script>
+
+        {{#each product.options}}
+            <script>
+                currentVariation = `{{toLowerCase this.display_name}}`;
+                plexObj.productOptions[`{{toLowerCase this.display_name}}`] = {};
+            </script>
+
+            <input type="text" id="pleximisation-product-{{toLowerCase this.display_name}}">
+
+            {{#each this.values}}
+            
+                <script>
+                    plexObj.productOptions[currentVariation][`{{this.label}}`] = `{{this.selected}}`;
+                </script>
+
+            {{/each}}
+
+        {{/each}}
 
         <!-- 'product-colour': productObject.colour, -->
         <!-- 'product-size': productObject.size, -->
     </div>
 </div>
-<!-- END - 1VINE PLEXIMISATION -->
-<!-- END - 1VINE PLEXIMISATION -->
 <!-- END - 1VINE PLEXIMISATION -->
