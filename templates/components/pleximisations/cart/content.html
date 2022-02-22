@@ -1,32 +1,30 @@
 <table class="cart" data-cart-quantity="{{cart.quantity}}">
+    
     <thead class="cart-header">
         <tr>
-            <th class="cart-header-item" colspan="2">{{lang 'cart.checkout.item'}}</th>
-            <th class="cart-header-item">{{lang 'cart.checkout.price'}}</th>
+            <th class="cart-header-item" colspan="2">Item</th>
+            <th class="cart-header-item">Price Per Unit</th>
             <th class="cart-header-item">Setup Fees</th>
-            <th class="cart-header-item cart-header-quantity">{{lang 'cart.checkout.quantity'}}</th>
-            <th class="cart-header-item">{{lang 'cart.checkout.total'}}</th>
+            <th class="cart-header-item cart-header-quantity">Quantity</th>
+            <th class="cart-header-item">Total</th>
         </tr>
     </thead>
+
     <tbody class="cart-list">
         {{#each cart.items}}
             <tr class="cart-item" data-item-row>
+                
+                <!-- Item Image -->
                 <td class="cart-item-block cart-item-figure">
-                    {{#if type '==' 'GiftCertificate'}}
-                        <img class="cart-item-fixed-image" src="{{cdn ../../theme_settings.default_image_gift_certificate}}" alt="GiftCertificate" title="GiftCertificate">
-                    {{else}}
-                        <img class="cart-item-image lazyload" data-sizes="auto" src="{{cdn 'img/loading.svg'}}" data-src="{{getImage image 'productthumb_size' (cdn ../../theme_settings.default_image_product)}}" alt="{{image.alt}}" title="{{image.alt}}">
-                    {{/if}}
+                    <img class="cart-item-image lazyload" data-sizes="auto" src="{{cdn 'img/loading.svg'}}" data-src="{{getImage image 'productthumb_size' (cdn ../../theme_settings.default_image_product)}}" alt="{{image.alt}}" title="{{image.alt}}">
                 </td>
-                <td class="cart-item-block cart-item-title">
-                    {{#if brand.name}}
-                        <p class="cart-item-brand">{{brand.name}}</p>
-                    {{/if}}
-                    <h4 class="cart-item-name"><a href="{{url}}">{{name}}</a></h4>
-                    {{#if release_date}}
-                        <p>({{release_date}})</p>
-                    {{/if}}
 
+                <!-- Item Details -->
+                <td class="cart-item-block cart-item-title">
+                    <p class="cart-item-brand">{{brand.name}}</p>
+                    
+                    <h4 class="cart-item-name"><a href="{{url}}">{{name}}</a></h4>
+                    
                     {{#or options sku}}
                         <dl class="definitionList">
                             <dt class="definitionList-key">{{lang 'products.sku'}}</dt>

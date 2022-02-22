@@ -44,13 +44,14 @@ const addtoQuote = () => {
         brand: document.querySelector('#pleximisation-product-brand').value,
         brandURL: document.querySelector('#pleximisation-product-brand-url').value,
         title: document.querySelector('#pleximisation-product-title').value,
-        sku: document.querySelector('#pleximisation-product-sku').value,
+        sku: document.querySelector('[data-product-sku]').value,
     };
 
     const toAddObject = {
         'product-id': productObject.id,
-        'product-image': productObject.imageURL,
+        'product-image-url': productObject.imageURL,
         'product-brand': productObject.brand,
+        'product-brand-url': productObject.brandURL,
         'product-title': productObject.title,
         'product-sku': productObject.sku,
 
@@ -77,6 +78,10 @@ const addtoQuote = () => {
     const cartItemID = `PXciID${generateRandomID()}`;
 
     sessionStorage.setItem(cartItemID, JSON.stringify(toAddObject));
+
+    // window.stencilUtils.api.productAttributes.optionChange(productId, {}, (err, response) => {
+    //     console.log(response);
+    // });
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -244,7 +249,6 @@ const loadPleximisations = () => {
     addPleximisation();
 };
 
-
 window.addEventListener('load', () => {
     const qty = document.querySelector('.form-input.form-input--incrementTotal');
     qty.value = 10;
@@ -254,6 +258,23 @@ window.addEventListener('load', () => {
 
     document.querySelector('.form-input.form-input--incrementTotal').addEventListener('change', () => {
         updateChargesBlock();
+    });
+
+    document.querySelector('[data-product-option-change]').addEventListener('change', (e) => {
+        let optionValue = e.target.labels[0].children[0].title ? e.target.labels[0].children[0].title : e.target.labels[0].children[0].innerHTML;
+
+        let currentOption;
+        let currentOptionTitle;
+
+        for (let x = 0; x < e.target.parentElement.children.length; x++) {
+            currentOption = e.target.parentElement.children[x];
+
+            if (currentOption.classList.contains('form-label--inlineSmall')) {
+                currentOptionTitle = currentOption.innerText.split(':')[0].trim();
+            }
+        }
+
+        document.querySelector(`#pleximisation-product-${currentOptionTitle.toLowerCase()}`).value = optionValue;
     });
 
     for (let i = 0; i < document.querySelectorAll('.form-option').length; i++) {
