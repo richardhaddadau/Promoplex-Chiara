@@ -261,7 +261,7 @@ window.addEventListener('load', () => {
     });
 
     document.querySelector('[data-product-option-change]').addEventListener('change', (e) => {
-        let optionValue = e.target.labels[0].children[0].title ? e.target.labels[0].children[0].title : e.target.labels[0].children[0].innerHTML;
+        const optionValue = e.target.labels[0].children[0].title ? e.target.labels[0].children[0].title : e.target.labels[0].children[0].innerHTML;
 
         let currentOption;
         let currentOptionTitle;

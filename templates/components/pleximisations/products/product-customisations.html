@@ -45,29 +45,21 @@
         </div>
 
         <script>
-            let currentVariation;
+            currentVariation = `{{toLowerCase this.display_name}}`;
+            plexObj.productOptions[`{{toLowerCase this.display_name}}`] = {};
         </script>
 
-        {{#each product.options}}
+        <input type="text" id="pleximisation-product-{{toLowerCase this.display_name}}">
+
+        {{#each this.values}}
+        
             <script>
-                currentVariation = `{{toLowerCase this.display_name}}`;
-                plexObj.productOptions[`{{toLowerCase this.display_name}}`] = {};
+                plexObj.productOptions[currentVariation][`{{this.label}}`] = `{{this.selected}}`;
             </script>
-
-            <input type="text" id="pleximisation-product-{{toLowerCase this.display_name}}">
-
-            {{#each this.values}}
-            
-                <script>
-                    plexObj.productOptions[currentVariation][`{{this.label}}`] = `{{this.selected}}`;
-                </script>
-
-            {{/each}}
 
         {{/each}}
 
-        <!-- 'product-colour': productObject.colour, -->
-        <!-- 'product-size': productObject.size, -->
+    {{/each}}
     </div>
 </div>
 <!-- END - 1VINE PLEXIMISATION -->
