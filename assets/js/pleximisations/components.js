@@ -37,6 +37,7 @@ const generateRandomID = () =>
 // Generate random three-figure number
      `${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`;
 
+// eslint-disable-next-line no-unused-vars
 const addtoQuote = () => {
     const quoteObject = plexObj;
 
@@ -205,7 +206,7 @@ const showError = (errorId, errorType, errorMessage) => {
     setTimeout(() => {
         currentError.classList.add('hide');
     }, 3000);
-}
+};
 
 const updateChargesBlock = () => {
     const elQty = document.querySelector('.pleximisation-quantity .pleximisation-pricing-unit');
