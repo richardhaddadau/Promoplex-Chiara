@@ -42,24 +42,14 @@
             <input type="text" id="pleximisation-product-brand" value='{{product.brand.name}}'>
             <input type="text" id="pleximisation-product-brand-url" value='{{product.brand.url}}'>
             <input type="text" id="pleximisation-product-title" value='{{product.title}}'>
+            
+            {{#each product.options}}
+    
+                <input type="text" id="pleximisation-product-{{toLowerCase this.display_name}}">
+                
+            {{/each}}
         </div>
 
-        <script>
-            currentVariation = `{{toLowerCase this.display_name}}`;
-            plexObj.productOptions[`{{toLowerCase this.display_name}}`] = {};
-        </script>
-
-        <input type="text" id="pleximisation-product-{{toLowerCase this.display_name}}">
-
-        {{#each this.values}}
-        
-            <script>
-                plexObj.productOptions[currentVariation][`{{this.label}}`] = `{{this.selected}}`;
-            </script>
-
-        {{/each}}
-
-    {{/each}}
     </div>
 </div>
 <!-- END - 1VINE PLEXIMISATION -->

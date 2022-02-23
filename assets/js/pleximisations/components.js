@@ -3,7 +3,10 @@ const plexObj = {
     limit: 4,
     current: 0,
 
-    orderQty: 10,
+    minimumOrderQty: 5,
+    moqMessage: 'The Minimum Order Quantity is 5 items',
+
+    orderQty: 5,
     orderPPU: 0,
     orderSetup: 0,
     orderTotal: 0,
@@ -22,13 +25,12 @@ const pleximisationOptions = {
     5: ['Screen Print 1 Colour', 0, 55],
     6: ['Screen Print 2 Colours', 0, 110],
     7: ['Screen Print 3 Colours', 0, 165],
-    8: ['Screen Print 4 Colour', 0, 220],
+    8: ['Screen Print 4 Colours', 0, 220],
     9: ['Small Full Colour Digital Print', 0, 75],
     10: ['Medium Full Colour Digital Print', 0, 75],
     11: ['Large Full Colour Digital Print', 0, 75],
     12: ['XL Full Colour Digital Print', 0, 75],
     13: ['2XL Full Colour Digital Print', 0, 75],
-    14: ['Undecorated', 0, 0],
 };
 
 const generateRandomID = () =>
@@ -60,11 +62,19 @@ const addtoQuote = () => {
         quantity: quoteObject.orderQty,
         total: quoteObject.orderTotal,
 
-        // 'product-colour': productObject.colour,
-        // 'product-size': productObject.size,
-
         pleximisations: [],
     };
+
+    let currentOption;
+    let currentOptionTitle;
+    const variationsData = document.querySelectorAll('[data-product-variation]');
+
+    for (let x = 0; x < variationsData.length; x++) {
+        currentOptionTitle = variationsData[x].getAttribute('id').slice('pleximisation-product-'.length);
+        currentOption = variationsData[x].value;
+
+        toAddObject[`product-variation-${currentOptionTitle}`] = currentOption;
+    }
 
     let x = 1;
 
@@ -78,10 +88,7 @@ const addtoQuote = () => {
     const cartItemID = `PXciID${generateRandomID()}`;
 
     sessionStorage.setItem(cartItemID, JSON.stringify(toAddObject));
-
-    // window.stencilUtils.api.productAttributes.optionChange(productId, {}, (err, response) => {
-    //     console.log(response);
-    // });
+    window.location.href = '/cart.php';
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -186,6 +193,20 @@ const getCorrectFees = () => {
     return extraSetupFees;
 };
 
+const showError = (errorId, errorType, errorMessage) => {
+    const currentError = document.querySelector(`#${errorId}`);
+    currentError.classList.remove('danger');
+    currentError.classList.remove('warning');
+
+    currentError.classList.add(errorType);
+    currentError.innerHTML = errorMessage;
+    currentError.classList.remove('hide');
+
+    setTimeout(() => {
+        currentError.classList.add('hide');
+    }, 3000);
+}
+
 const updateChargesBlock = () => {
     const elQty = document.querySelector('.pleximisation-quantity .pleximisation-pricing-unit');
     const elIndividualPrice = document.querySelector('.pleximisation-individual-price .pleximisation-pricing-unit');
@@ -200,6 +221,13 @@ const updateChargesBlock = () => {
 
     setTimeout(() => {
         const qty = document.querySelector('.form-input.form-input--incrementTotal');
+        let currentQty = qty.value;
+
+        if (currentQty < plexObj.minimumOrderQty) {
+            showError('pleximisation-qty-box-error', 'warning', plexObj.moqMessage);
+            currentQty = plexObj.minimumOrderQty;
+        }
+        qty.value = currentQty;
 
         const setPrice = parseFloat(document.querySelector('[data-product-price-without-tax]').innerHTML.replace('$', '')).toFixed(2);
 
@@ -234,6 +262,62 @@ const removePleximisation = (e) => {
     updateChargesBlock();
 };
 
+const updateMOQ = () => {
+    let highestMOQ = 0;
+    let highestMOQMessage = '';
+    let currentMOQ = 0;
+    let currentMOQMessage = '';
+    let currentPleximisation;
+
+    // eslint-disable-next-line prefer-const
+    for (let item in plexObj.pleximisationFees) {
+        if (plexObj.pleximisationFees[item][2] !== '') {
+            currentMOQ = 0;
+            currentPleximisation = plexObj.pleximisationFees[item][2];
+
+            switch (currentPleximisation) {
+            case 'Small Embroidery':
+            case 'Medium Embroidery':
+            case 'Large Embroidery':
+            case 'XL Embroidery':
+                currentMOQ = 10;
+                currentMOQMessage = `The Minimum Order Quantity for Embroidery is ${currentMOQ} items`;
+                break;
+
+            case 'Screen Print 1 Colour':
+            case 'Screen Print 2 Colours':
+            case 'Screen Print 3 Colours':
+            case 'Screen Print 4 Colours':
+                currentMOQ = 25;
+                currentMOQMessage = `The Minimum Order Quantity for Screen Print is ${currentMOQ} items`;
+                break;
+
+            case 'Small Full Colour Digital Print':
+            case 'Medium Full Colour Digital Print':
+            case 'Large Full Colour Digital Print':
+            case 'XL Full Colour Digital Print':
+            case '2XL Full Colour Digital Print':
+                currentMOQ = 5;
+                currentMOQMessage = `The Minimum Order Quantity for Digital Transfers is ${currentMOQ} items`;
+                break;
+
+            default:
+                currentMOQ = 5;
+                currentMOQMessage = `The Minimum Order Quantity is ${currentMOQ} items`;
+                break;
+            }
+
+            if (currentMOQ > highestMOQ) {
+                highestMOQ = currentMOQ;
+                highestMOQMessage = currentMOQMessage;
+            }
+        }
+    }
+
+    plexObj.minimumOrderQty = highestMOQ;
+    plexObj.moqMessage = highestMOQMessage;
+};
+
 // eslint-disable-next-line no-unused-vars
 const changePleximisation = (e) => {
     const idKey = e.parentElement.dataset.secretId;
@@ -242,6 +326,7 @@ const changePleximisation = (e) => {
     plexObj.pleximisationFees[idKey][1] = pleximisationOptions[e.options[e.selectedIndex].dataset.index][2];
     plexObj.pleximisationFees[idKey][2] = pleximisationOptions[e.options[e.selectedIndex].dataset.index][0];
 
+    updateMOQ();
     updateChargesBlock();
 };
 
@@ -250,8 +335,14 @@ const loadPleximisations = () => {
 };
 
 window.addEventListener('load', () => {
+    for (let i = 0; i < document.querySelectorAll('.pleximisation-error-message').length; i++) {
+        if (!document.querySelectorAll('.pleximisation-error-message')[i].classList.contains('hide')) {
+            document.querySelectorAll('.pleximisation-error-message')[i].classList.add('hide');
+        }
+    }
+
     const qty = document.querySelector('.form-input.form-input--incrementTotal');
-    qty.value = 10;
+    qty.value = plexObj.minimumOrderQty;
 
     loadPleximisations();
     updateChargesBlock();
@@ -274,7 +365,9 @@ window.addEventListener('load', () => {
             }
         }
 
-        document.querySelector(`#pleximisation-product-${currentOptionTitle.toLowerCase()}`).value = optionValue;
+        if (document.querySelector(`#pleximisation-product-${currentOptionTitle.toLowerCase()}`)) {
+            document.querySelector(`#pleximisation-product-${currentOptionTitle.toLowerCase()}`).value = optionValue;
+        }
     });
 
     for (let i = 0; i < document.querySelectorAll('.form-option').length; i++) {
