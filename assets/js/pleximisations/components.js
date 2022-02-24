@@ -37,64 +37,78 @@ const generateRandomID = () =>
 // Generate random three-figure number
      `${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`;
 
+const showError = (errorId, errorType, errorMessage) => {
+    const currentError = document.querySelector(`#${errorId}`);
+    currentError.classList.remove('danger');
+    currentError.classList.remove('warning');
+
+    currentError.classList.add(errorType);
+    currentError.innerHTML = errorMessage;
+    currentError.classList.remove('hide');
+
+    setTimeout(() => {
+        currentError.classList.add('hide');
+    }, 3000);
+};
+
 // eslint-disable-next-line no-unused-vars
 const addtoQuote = () => {
     const quoteObject = plexObj;
 
-    const productObject = {
-        id: document.querySelector('#pleximisation-product-id').value,
-        imageURL: document.querySelector('#pleximisation-product-image').value,
-        brand: document.querySelector('#pleximisation-product-brand').value,
-        brandURL: document.querySelector('#pleximisation-product-brand-url').value,
-        title: document.querySelector('#pleximisation-product-title').value,
-        sku: document.querySelector('[data-product-sku]').value,
-    };
+    if (Object.keys(quoteObject.pleximisationFees).length > 1) {
+        const productObject = {
+            id: document.querySelector('#pleximisation-product-id').value,
+            imageURL: document.querySelector('#pleximisation-product-image').value,
+            brand: document.querySelector('#pleximisation-product-brand').value,
+            title: document.querySelector('#pleximisation-product-title').value,
+            productURL: document.querySelector('#pleximisation-product-url').value,
+            sku: document.querySelector('[data-product-sku]').innerHTML,
+        };
 
-    const toAddObject = {
-        'product-id': productObject.id,
-        'product-image-url': productObject.imageURL,
-        'product-brand': productObject.brand,
-        'product-brand-url': productObject.brandURL,
-        'product-title': productObject.title,
-        'product-sku': productObject.sku,
+        const toAddObject = {
+            'product-id': productObject.id,
+            'product-image-url': productObject.imageURL,
+            'product-brand': productObject.brand,
+            'product-title': productObject.title,
+            'product-url': productObject.productURL,
+            'product-sku': productObject.sku,
 
-        'price-per-unit': quoteObject.orderPPU,
-        'setup-fees': quoteObject.orderSetup,
-        quantity: quoteObject.orderQty,
-        total: quoteObject.orderTotal,
+            'price-per-unit': quoteObject.orderPPU,
+            'setup-fees': quoteObject.orderSetup,
+            quantity: quoteObject.orderQty,
+            total: quoteObject.orderTotal,
 
-        pleximisations: [],
-    };
+            pleximisations: [],
+            variations: [],
+        };
 
-    let currentOption;
-    let currentOptionTitle;
-    const variationsData = document.querySelectorAll('[data-product-variation]');
+        let currentOption;
+        let currentOptionTitle;
+        const variationsData = document.querySelectorAll('[data-product-variation]');
 
-    for (let x = 0; x < variationsData.length; x++) {
-        currentOptionTitle = variationsData[x].getAttribute('id').slice('pleximisation-product-'.length);
-        currentOption = variationsData[x].value;
+        for (let x = 0; x < variationsData.length; x++) {
+            currentOptionTitle = variationsData[x].getAttribute('id').slice('pleximisation-product-'.length);
+            currentOption = variationsData[x].value;
 
-        toAddObject[`product-variation-${currentOptionTitle}`] = currentOption;
-    }
-
-    let x = 1;
-
-    for (const item in quoteObject.pleximisationFees) {
-        if (quoteObject.pleximisationFees[item]) {
-            toAddObject.pleximisations.push(`${x}: ${quoteObject.pleximisationFees[item][2]}`);
-            x++;
+            toAddObject.variations.push([currentOptionTitle, currentOption]);
         }
+
+        let x = 1;
+
+        for (const item in quoteObject.pleximisationFees) {
+            if (Object.keys(quoteObject.pleximisationFees).length > 0) {
+                toAddObject.pleximisations.push([x, quoteObject.pleximisationFees[item][2]]);
+                x++;
+            }
+        }
+
+        const cartItemID = `PXciID${generateRandomID()}`;
+
+        localStorage.setItem(cartItemID, JSON.stringify(toAddObject));
+        window.location.href = '/cart.php';
+    } else {
+        showError('pleximisation-quote-message', 'danger', 'Oops! You forgot to choose a customisation.');
     }
-
-    const cartItemID = `PXciID${generateRandomID()}`;
-
-    sessionStorage.setItem(cartItemID, JSON.stringify(toAddObject));
-    window.location.href = '/cart.php';
-};
-
-// eslint-disable-next-line no-unused-vars
-const removeFromQuote = () => {
-
 };
 
 const addPleximisation = () => {
@@ -192,20 +206,6 @@ const getCorrectFees = () => {
     }
 
     return extraSetupFees;
-};
-
-const showError = (errorId, errorType, errorMessage) => {
-    const currentError = document.querySelector(`.${errorId}`);
-    currentError.classList.remove('danger');
-    currentError.classList.remove('warning');
-
-    currentError.classList.add(errorType);
-    currentError.innerHTML = errorMessage;
-    currentError.classList.remove('hide');
-
-    setTimeout(() => {
-        currentError.classList.add('hide');
-    }, 3000);
 };
 
 const updateChargesBlock = () => {
@@ -336,6 +336,8 @@ const loadPleximisations = () => {
 };
 
 window.addEventListener('load', () => {
+    document.querySelector('#pleximisation-product-image').value = document.querySelector('.productView-imageCarousel-main-item-img-container img').getAttribute('src')
+
     for (let i = 0; i < document.querySelectorAll('.pleximisation-error-message').length; i++) {
         if (!document.querySelectorAll('.pleximisation-error-message')[i].classList.contains('hide')) {
             document.querySelectorAll('.pleximisation-error-message')[i].classList.add('hide');

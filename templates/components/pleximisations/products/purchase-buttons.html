@@ -1,4 +1,5 @@
 <div class="form-action-group _addToCartVisibility" {{#unless product.can_purchase}}style="display:none"{{/unless}}>
+    <p class="pleximisation-error-message" id="pleximisation-quote-message">Error Message</p>
     <div class="form-action">
         <input id="pleximisation-addToCart" data-wait-message="Add to Quote" class="button button--primary" type="button" value="Add to Quote" onclick="addtoQuote();" />
     </div>

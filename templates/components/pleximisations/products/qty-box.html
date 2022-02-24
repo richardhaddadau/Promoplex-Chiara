@@ -1,5 +1,5 @@
 <div class="form-field form-field--increments _addToCartVisibility" {{#unless product.can_purchase}}style="display:none"{{/unless}}>
-    <p class="pleximisation-error-message">Error Message</p>
+    <p class="pleximisation-error-message" id="pleximisation-error-message">Error Message</p>
     <div class="quantity-block">
         <label class="form-label form-label--alternate"
                 for="qty[{{product.id}}]">{{lang 'products.quantity'}}</label>

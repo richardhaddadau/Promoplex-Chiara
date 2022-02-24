@@ -9,7 +9,6 @@
     <div class="pleximisation-add" onclick="addPleximisation()"><i class="fa-solid fa-plus"></i></div>
     <div id="pleximisation-options"></div>
 
-
     <div class="pleximisation-pricing">
 
         <div class="pleximisation-charges">
@@ -38,14 +37,14 @@
 
         <div class="pleximisation-product-info" data-product-id='{{product.id}}'>
             <input type="hidden" id="pleximisation-product-id" value='{{product.id}}'>
-            <input type="hidden" id="pleximisation-product-image" value='{{product.main_image.data}}'>
+            <input type="hidden" id="pleximisation-product-image" value=''>
             <input type="hidden" id="pleximisation-product-brand" value='{{product.brand.name}}'>
-            <input type="hidden" id="pleximisation-product-brand-url" value='{{product.brand.url}}'>
             <input type="hidden" id="pleximisation-product-title" value='{{product.title}}'>
+            <input type="hidden" id="pleximisation-product-url" value='{{product.url}}'>
 
             {{#each product.options}}
     
-                <input type="hidden" id="pleximisation-product-{{toLowerCase this.display_name}}">
+                <input type="hidden" id="pleximisation-product-{{toLowerCase this.display_name}}" data-product-variation>
                 
             {{/each}}
         </div>

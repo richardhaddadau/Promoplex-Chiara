@@ -1,6 +1,7 @@
 <table class="cart" data-cart-quantity="{{cart.quantity}}">
 
     <script src="../../../assets/js/pleximisations/cart.js"></script>
+    <script src="https://kit.fontawesome.com/6b60be86d6.js" crossorigin="anonymous"></script>
     
     <thead class="cart-header">
         <tr>
@@ -12,7 +13,8 @@
         </tr>
     </thead>
 
-    <tbody class="cart-list">
+    <tbody class="cart-list" id="pleximimsation-quote-list">
+
         {{#each cart.items}}
             <tr class="cart-item" data-item-row>
                 
@@ -135,6 +137,7 @@
                 </td>
             </tr>
         {{/each}}
+
     </tbody>
 </table>
 {{{ remote_api_scripts }}}
