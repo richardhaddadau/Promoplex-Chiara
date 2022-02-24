@@ -195,7 +195,7 @@ const getCorrectFees = () => {
 };
 
 const showError = (errorId, errorType, errorMessage) => {
-    const currentError = document.querySelector(`#${errorId}`);
+    const currentError = document.querySelector(`.${errorId}`);
     currentError.classList.remove('danger');
     currentError.classList.remove('warning');
 
@@ -225,7 +225,7 @@ const updateChargesBlock = () => {
         let currentQty = qty.value;
 
         if (currentQty < plexObj.minimumOrderQty) {
-            showError('pleximisation-qty-box-error', 'warning', plexObj.moqMessage);
+            showError('pleximisation-error-message', 'warning', plexObj.moqMessage);
             currentQty = plexObj.minimumOrderQty;
         }
         qty.value = currentQty;

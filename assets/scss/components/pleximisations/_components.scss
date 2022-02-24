@@ -1,8 +1,42 @@
 //  PRODUCTS PAGE
 //  PRODUCTS PAGE
 //  PRODUCTS PAGE
+.form-field--increments {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    align-items: flex-start !important;
+}
+
+.form-field--increments .quantity-block {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    align-items: center;
+}
+
 #pleximisation-block {
     font-size: 1rem;
+}
+
+.pleximisation-error-message {
+    width: 100%;
+
+    font-style: italic;
+}
+
+.pleximisation-error-message.danger {
+    color: red;
+}
+
+.pleximisation-error-message.warning {
+    color: orange;
+}
+
+.pleximisation-error-message.hide {
+    display: none;
 }
 
 #pleximisation-block select {
