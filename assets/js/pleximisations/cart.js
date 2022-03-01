@@ -5,6 +5,10 @@ const updateCart = () => {
 
     let itemListHTML = '';
 
+    let quoteSubTotal = 0;
+    let quoteTax = 0;
+    let quoteTotal = 0;
+
     for (const item in cartItems) {
         if (cartItems[item].slice(0, 6) === 'PXciID') {
             currentItem = JSON.parse(localStorage.getItem(cartItems[item]));
@@ -75,10 +79,19 @@ const updateCart = () => {
                     </td>
                 </tr>
             `;
+
+            const floatTotal = parseFloat(currentItem.total);
+
+            quoteSubTotal += floatTotal;
+            quoteTax += floatTotal * 0.1;
+            quoteTotal += floatTotal * 1.1;
         }
     }
 
     document.querySelector('#pleximimsation-quote-list').innerHTML = itemListHTML;
+    document.querySelector('#pleximisation-totals-subtotal span').innerHTML = `$${quoteSubTotal.toFixed(2)}`;
+    document.querySelector('#pleximisation-totals-tax span').innerHTML = `$${quoteTax.toFixed(2)}`;
+    document.querySelector('#pleximisation-totals-total span').innerHTML = `$${quoteTotal.toFixed(2)}`;
 };
 
 const removeFromQuote = (storageID) => {
@@ -94,5 +107,5 @@ window.addEventListener('load', () => {
             const thisId = document.querySelectorAll('[data-pleximisation-id]')[i].dataset.pleximisationId;
             removeFromQuote(thisId);
         });
-    };
+    }
 });

@@ -53,9 +53,9 @@ const showError = (errorId, errorType, errorMessage) => {
 
 // eslint-disable-next-line no-unused-vars
 const addtoQuote = () => {
-    const quoteObject = plexObj;
-
-    if (Object.keys(quoteObject.pleximisationFees).length > 1) {
+    console.log(Object.keys(plexObj.pleximisationFees).length);
+    console.log(Object.keys(plexObj.pleximisationFees));
+    if (Object.keys(plexObj.pleximisationFees).length > 0) {
         const productObject = {
             id: document.querySelector('#pleximisation-product-id').value,
             imageURL: document.querySelector('#pleximisation-product-image').value,
@@ -73,10 +73,10 @@ const addtoQuote = () => {
             'product-url': productObject.productURL,
             'product-sku': productObject.sku,
 
-            'price-per-unit': quoteObject.orderPPU,
-            'setup-fees': quoteObject.orderSetup,
-            quantity: quoteObject.orderQty,
-            total: quoteObject.orderTotal,
+            'price-per-unit': plexObj.orderPPU,
+            'setup-fees': plexObj.orderSetup,
+            quantity: plexObj.orderQty,
+            total: plexObj.orderTotal,
 
             pleximisations: [],
             variations: [],
@@ -95,9 +95,9 @@ const addtoQuote = () => {
 
         let x = 1;
 
-        for (const item in quoteObject.pleximisationFees) {
-            if (Object.keys(quoteObject.pleximisationFees).length > 0) {
-                toAddObject.pleximisations.push([x, quoteObject.pleximisationFees[item][2]]);
+        for (const item in plexObj.pleximisationFees) {
+            if (Object.keys(plexObj.pleximisationFees).length > 0) {
+                toAddObject.pleximisations.push([x, plexObj.pleximisationFees[item][2]]);
                 x++;
             }
         }
