@@ -334,7 +334,7 @@ const loadPleximisations = () => {
 };
 
 window.addEventListener('load', () => {
-    document.querySelector('#pleximisation-product-image').value = document.querySelector('.productView-imageCarousel-main-item-img-container img').getAttribute('src')
+    document.querySelector('#pleximisation-product-image').value = document.querySelector('.productView-imageCarousel-main-item-img-container img').getAttribute('src');
 
     for (let i = 0; i < document.querySelectorAll('.pleximisation-error-message').length; i++) {
         if (!document.querySelectorAll('.pleximisation-error-message')[i].classList.contains('hide')) {
