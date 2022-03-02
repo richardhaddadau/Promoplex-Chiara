@@ -7,38 +7,38 @@ cart: true
     <main class="page-content" data-cart>
         {{> components/common/breadcrumbs breadcrumbs=breadcrumbs}}
 
-        {{> components/cart/page-title}}
+        {{> components/pleximisations/cart/page-title}}
 
         <div data-cart-status>
             {{> components/cart/status-messages}}
         </div>
 
-            <!-- Move cart.items.length check here -->
-            <div class="loadingOverlay"></div>
+        <!-- Move line below to above -->
+        <div id="pleximisation-cart-wrapper">
+                <div class="loadingOverlay"></div>
 
-            <div data-cart-content>
+                <div data-cart-content>
+                    <!-- 1VINE - START PLEXIMISATIONS -->
+                    {{> components/pleximisations/cart/content}}
+                    <!-- 1VINE - END PLEXIMISATIONS -->
+                </div>
+
+                <div data-cart-totals>
+                    <!-- 1VINE - START PLEXIMISATIONS -->
+                    {{> components/pleximisations/cart/totals}}
+                    <!-- 1VINE - END PLEXIMISATIONS -->
+                </div>
+
                 <!-- 1VINE - START PLEXIMISATIONS -->
-                {{> components/pleximisations/cart/content}}
+                {{> components/pleximisations/cart/cart-form}}
                 <!-- 1VINE - END PLEXIMISATIONS -->
-            </div>
+        </div>
 
-            <div data-cart-totals>
-                <!-- 1VINE - START PLEXIMISATIONS -->
-                {{> components/pleximisations/cart/totals}}
-                <!-- 1VINE - END PLEXIMISATIONS -->
-            </div>
-
-            <!-- 1VINE - START PLEXIMISATIONS -->
-            {{> components/pleximisations/cart/cart-form}}
-            <!-- 1VINE - END PLEXIMISATIONS -->
-
-            <!-- Move line below to above -->
-            {{#if cart.items.length}}
-
-        {{else}}
+        <div id="pleximisation-empty-cart-wrapper">
+            <p class="pleximisation-error-message" id="pleximisation-final-message">Error Message</p>
             <h3>{{lang 'cart.checkout.empty_cart'}}</h3>
-            {{{ remote_api_scripts }}}
-        {{/if}}
+        </div>
+
 
         {{{snippet 'cart'}}}
     </main>

@@ -53,8 +53,6 @@ const showError = (errorId, errorType, errorMessage) => {
 
 // eslint-disable-next-line no-unused-vars
 const addtoQuote = () => {
-    console.log(Object.keys(plexObj.pleximisationFees).length);
-    console.log(Object.keys(plexObj.pleximisationFees));
     if (Object.keys(plexObj.pleximisationFees).length > 0) {
         const productObject = {
             id: document.querySelector('#pleximisation-product-id').value,

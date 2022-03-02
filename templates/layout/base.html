@@ -36,6 +36,15 @@
             });
         </script>
 
+        <!-- Pleximisation - Email JS -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+        <script type="text/javascript">
+            (function() {
+                emailjs.init("user_4KqRXfNSMj7rdSqJiHCHs");
+            })();
+        </script>
+        <!-- Pleximisation - Email JS -->
+
         {{#or (if theme_settings.csspreload '===' '') (if theme_settings.csspreload '===' 'none')}}
             {{ getFontsCollection }}
             {{{stylesheet '/assets/css/theme.css'}}}

@@ -29,14 +29,30 @@
 
 .pleximisation-error-message.danger {
     color: red;
+    border: 1px solid red;
 }
 
 .pleximisation-error-message.warning {
     color: orange;
+    border: 1px solid orange;
+}
+
+.pleximisation-error-message.success {
+    color: white;
+    background-color: #06AF8F;
 }
 
 .pleximisation-error-message.hide {
     display: none;
+}
+
+#pleximisation-cart-message,
+#pleximisation-final-message {
+    margin: auto;
+    padding: 10px;
+    
+    max-width: 600px;
+    text-align: center;
 }
 
 #pleximisation-block select {
