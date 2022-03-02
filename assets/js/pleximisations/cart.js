@@ -1,4 +1,6 @@
 /* eslint-disable linebreak-style */
+let submitObj = 0;
+
 const countCartItems = () => {
     const cartItems = Object.keys(localStorage);
     let cartTotal = 0;
@@ -193,135 +195,157 @@ const showError = (errorId, errorType, errorMessage) => {
 
 // eslint-disable-next-line no-unused-vars
 const submitQuote = () => {
-    const cartItems = Object.keys(localStorage);
-    let currentItem;
+    const submitButton = document.querySelector('#pleximisation-submit-button');
+    if (submitObj === 0) {
+        submitObj = 1;
+        submitButton.innerHTML = 'Checking information...';
 
-    let emailContent = '<table style="width: 100%;"><tbody>';
+        const cartItems = Object.keys(localStorage);
+        let currentItem;
 
-    let quoteTotal = 0;
+        let emailContent = '<table style="width: 100%;"><tbody>';
 
-    if (countCartItems() === 0) {
-        showError('pleximisation-cart-message', 'danger', 'You cannot request a quote for an empty cart.');
-        return false;
-    }
+        let quoteTotal = 0;
 
-    const errorMessage = formValidated();
+        if (countCartItems() === 0) {
+            showError('pleximisation-cart-message', 'danger', 'You cannot request a quote for an empty cart.');
 
-    if (errorMessage != null) {
-        showError('pleximisation-cart-message', 'danger', errorMessage.join('<br>'));
-        return false;
-    }
+            submitObj = 0;
+            submitButton.innerHTML = 'Request Quote';
 
-    for (let i = 0; i < document.querySelectorAll('.pleximisation-error-message').length; i++) {
-        if (!document.querySelectorAll('.pleximisation-error-message')[i].classList.contains('hide')) {
-            document.querySelectorAll('.pleximisation-error-message')[i].classList.add('hide');
+            return false;
         }
-    }
 
-    let cartCount = 1;
+        const errorMessage = formValidated();
 
-    for (const item in cartItems) {
-        if (cartItems[item].slice(0, 6) === 'PXciID') {
-            currentItem = JSON.parse(localStorage.getItem(cartItems[item]));
+        if (errorMessage != null) {
+            showError('pleximisation-cart-message', 'danger', errorMessage.join('<br>'));
 
-            let currentOptions = '';
-            let currentPleximisations = '';
+            submitObj = 0;
+            submitButton.innerHTML = 'Request Quote';
 
-            // eslint-disable-next-line guard-for-in
-            for (const x in currentItem.variations) {
-                currentOptions += `
-                    ${currentItem.variations[x][0].toUpperCase()}: ${currentItem.variations[x][1]}<br/>
-                `;
-            }
-
-            // eslint-disable-next-line guard-for-in
-            for (const y in currentItem.pleximisations) {
-                currentPleximisations += `
-                    ${currentItem.pleximisations[y][0]}: ${currentItem.pleximisations[y][1]}<br/>
-                `;
-            }
-
-            emailContent += `
-                <tr style="width: 100%; min-height: 20px; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; border-bottom: 1px solid #ea4f24;">
-                    <td style="padding: 10px; width: 15%; text-align: center;">
-                        <img src="${currentItem['product-image-url']}" style="max-height: 130px; max-width: 100%;" alt="">
-                    </td>
-
-                    <td style="padding: 10px; flex-grow: 2; height: 100%;">
-                        <h4 style="font-size: 100%;">${cartCount++}. ${currentItem['product-title']}</h4>
-                        <p style="font-size: 80%;">
-                            SKU: ${currentItem['product-sku']}<br/>
-                            ${currentOptions}<br/>
-                            ${currentPleximisations}
-                        </p>
-
-                        <p style="font-size: 80%;">
-                            Price Per Unit: $${parseFloat(currentItem['price-per-unit']).toFixed(2)}
-                            Setup Fees: $${parseFloat(currentItem['setup-fees']).toFixed(2)}
-                            Quantity: ${currentItem.quantity}
-                        </p>
-                    </td>
-
-                    <td style="padding: 10px; width: 20%; text-align: center;">
-                        <h3 style="font-size: 120%;">$${parseFloat(currentItem.total).toFixed(2)}</h3>
-                    </td>
-                </tr>
-            `;
-
-            const floatTotal = parseFloat(currentItem.total);
-            quoteTotal += floatTotal * 1.1;
+            return false;
         }
-    }
 
-    emailContent += '</tbody></table>';
+        for (let i = 0; i < document.querySelectorAll('.pleximisation-error-message').length; i++) {
+            if (!document.querySelectorAll('.pleximisation-error-message')[i].classList.contains('hide')) {
+                document.querySelectorAll('.pleximisation-error-message')[i].classList.add('hide');
+            }
+        }
 
-    const customerFirstName = document.querySelector('#form-first-name').value;
-    const customerLastName = document.querySelector('#form-last-name').value;
-    const customerCompanyName = document.querySelector('#form-company-name').value;
-    const customerEmail = document.querySelector('#form-email').value;
-    const customerPhone = document.querySelector('#form-phone').value;
-    const customerMobile = document.querySelector('#form-mobile').value;
-    const customerStreetAddress = document.querySelector('#form-street-address').value;
-    const customerSuburb = document.querySelector('#form-suburb').value;
-    const customerPostcode = document.querySelector('#form-postcode').value;
-    const customerState = document.querySelector('#form-state').value;
-    const customerComments = document.querySelector('#form-comments').value;
+        let cartCount = 1;
 
-    const templateParams = {
-        'quote-first-name': customerFirstName,
-        'quote-last-name': customerLastName,
-        'quote-company-name': customerCompanyName,
-        'quote-email': customerEmail,
-        'quote-phone': customerPhone,
-        'quote-mobile': customerMobile,
-        'quote-street-address': customerStreetAddress,
-        'quote-suburb': customerSuburb,
-        'quote-postcode': customerPostcode,
-        'quote-state': customerState,
-        'quote-comments': customerComments,
+        submitButton.innerHTML = 'Submitting request...';
 
-        'quote-content': emailContent,
-        'quote-total': quoteTotal.toFixed(2),
-    };
+        for (const item in cartItems) {
+            if (cartItems[item].slice(0, 6) === 'PXciID') {
+                currentItem = JSON.parse(localStorage.getItem(cartItems[item]));
 
-    // eslint-disable-next-line no-undef
-    emailjs.send('service_kj4z9fj', 'template_2iqqo7e', templateParams)
-        .then((response) => {
-            console.log('SUCCESS!', response.status, response.text);
-            showError('pleximisation-cart-message', 'success', 'Thank you for your quote request. We will be in touch soon.');
+                let currentOptions = '';
+                let currentPleximisations = '';
 
-            for (const item in cartItems) {
-                if (cartItems[item].slice(0, 6) === 'PXciID') {
-                    removeFromQuote(cartItems[item]);
+                // eslint-disable-next-line guard-for-in
+                for (const x in currentItem.variations) {
+                    currentOptions += `
+                        ${currentItem.variations[x][0].toUpperCase()}: ${currentItem.variations[x][1]}<br/>
+                    `;
                 }
-            }
-        }, (error) => {
-            console.log('FAILED...', error);
-            // eslint-disable-next-line quotes
-            showError('pleximisation-cart-message', 'danger', `Oops! Something went wrong. Please try again.<br/>If this keeps happening, please contact us and let us know.`);
-        });
 
-    updateCart();
+                // eslint-disable-next-line guard-for-in
+                for (const y in currentItem.pleximisations) {
+                    currentPleximisations += `
+                        ${currentItem.pleximisations[y][0]}: ${currentItem.pleximisations[y][1]}<br/>
+                    `;
+                }
+
+                emailContent += `
+                    <tr style="width: 100%; min-height: 20px; display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; border-bottom: 1px solid #ea4f24;">
+                        <td style="padding: 10px; width: 15%; text-align: center;">
+                            <img src="${currentItem['product-image-url']}" style="max-height: 130px; max-width: 100%;" alt="">
+                        </td>
+
+                        <td style="padding: 10px; flex-grow: 2; height: 100%;">
+                            <h4 style="font-size: 100%;">${cartCount++}. ${currentItem['product-title']}</h4>
+                            <p style="font-size: 80%;">
+                                SKU: ${currentItem['product-sku']}<br/>
+                                ${currentOptions}<br/>
+                                ${currentPleximisations}
+                            </p>
+
+                            <p style="font-size: 80%;">
+                                Price Per Unit: $${parseFloat(currentItem['price-per-unit']).toFixed(2)}
+                                Setup Fees: $${parseFloat(currentItem['setup-fees']).toFixed(2)}
+                                Quantity: ${currentItem.quantity}
+                            </p>
+                        </td>
+
+                        <td style="padding: 10px; width: 20%; text-align: center;">
+                            <h3 style="font-size: 120%;">$${parseFloat(currentItem.total).toFixed(2)}</h3>
+                        </td>
+                    </tr>
+                `;
+
+                const floatTotal = parseFloat(currentItem.total);
+                quoteTotal += floatTotal * 1.1;
+            }
+        }
+
+        emailContent += '</tbody></table>';
+
+        const customerFirstName = document.querySelector('#form-first-name').value;
+        const customerLastName = document.querySelector('#form-last-name').value;
+        const customerCompanyName = document.querySelector('#form-company-name').value;
+        const customerEmail = document.querySelector('#form-email').value;
+        const customerPhone = document.querySelector('#form-phone').value;
+        const customerMobile = document.querySelector('#form-mobile').value;
+        const customerStreetAddress = document.querySelector('#form-street-address').value;
+        const customerSuburb = document.querySelector('#form-suburb').value;
+        const customerPostcode = document.querySelector('#form-postcode').value;
+        const customerState = document.querySelector('#form-state').value;
+        const customerComments = document.querySelector('#form-comments').value;
+
+        const templateParams = {
+            'quote-first-name': customerFirstName,
+            'quote-last-name': customerLastName,
+            'quote-company-name': customerCompanyName,
+            'quote-email': customerEmail,
+            'quote-phone': customerPhone,
+            'quote-mobile': customerMobile,
+            'quote-street-address': customerStreetAddress,
+            'quote-suburb': customerSuburb,
+            'quote-postcode': customerPostcode,
+            'quote-state': customerState,
+            'quote-comments': customerComments,
+
+            'quote-content': emailContent,
+            'quote-total': quoteTotal.toFixed(2),
+        };
+
+        // eslint-disable-next-line no-undef
+        emailjs.send('service_kj4z9fj', 'template_2iqqo7e', templateParams)
+            .then((response) => {
+                console.log('SUCCESS!', response.status, response.text);
+                showError('pleximisation-final-message', 'success', 'Thank you for your quote request. We will be in touch soon.');
+
+                for (const item in cartItems) {
+                    if (cartItems[item].slice(0, 6) === 'PXciID') {
+                        removeFromQuote(cartItems[item]);
+                    }
+                }
+
+                submitObj = 0;
+            }, (error) => {
+                console.log('FAILED...', error);
+                // eslint-disable-next-line quotes
+                showError('pleximisation-cart-message', 'danger', `Oops! Something went wrong. Please try again.<br/>If this keeps happening, please contact us and let us know.`);
+
+                submitObj = 0;
+            });
+
+        updateCart();
+
+        submitObj = 0;
+    }
 };
 
 window.addEventListener('load', () => {
