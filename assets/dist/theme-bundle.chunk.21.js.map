@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://WebpackChiara/./assets/js/chiara/photoswipe.js"],"names":[],"mappings":"qHAAA","file":"theme-bundle.chunk.21.js","sourcesContent":["/* eslint-disable camelcase */\nexport { default as PhotoSwipe } from 'photoswipe/dist/photoswipe';\nexport { default as PhotoSwipeUI_Default } from 'photoswipe/dist/photoswipe-ui-default';\n"],"sourceRoot":""}

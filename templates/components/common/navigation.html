@@ -74,20 +74,17 @@
                 <span class="countPill countPill--positive"></span></a>
         </li>
 
-        <li class="navUser-item navUser-item--cart">
-            <a
-                class="navUser-action"
-                data-cart-preview
-                data-dropdown="cart-preview-dropdown"
-                data-options="align:right"
-                href="{{urls.cart}}">
+        <!-- 1VINE - START Pleximisation -->
+        <li class="navUser-item navUser-item--cart" id="pleximisation-nav-cart">
+            <a class="navUser-action pleximisation-cart-nav"
+                href="/cart.php">
+                
                 <i class="navUser-item-icon"><svg><use xlink:href="#icon-cart" /></svg></i>
-                <span class="navUser-item-cartLabel">{{lang 'common.cart'}}</span>
-                <span class="countPill{{#if cart.items}} countPill--positive{{/if}} cart-quantity">{{cart.quantity}}</span>
-            </a>
+                <span class="pleximisation-countPill pleximisation-countPill--positive">1</span>
 
-            <div class="dropdown-menu" id="cart-preview-dropdown" data-dropdown-content aria-hidden="true"></div>
+            </a>
         </li>
+        <!-- 1VINE - END Pleximisation -->
 
         {{#if theme_settings.navUser_panel}}
             <li class="navUser-item navUser-item--more">

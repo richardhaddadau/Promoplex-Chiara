@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://WebpackChiara/./assets/js/theme/checkout.js"],"names":["Checkout","PageManager"],"mappings":"oQAEqBA,E,sKAAiBC","file":"theme-bundle.chunk.23.js","sourcesContent":["import PageManager from './page-manager';\n\nexport default class Checkout extends PageManager {}\n"],"sourceRoot":""}

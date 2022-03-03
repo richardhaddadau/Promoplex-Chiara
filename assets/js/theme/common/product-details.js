@@ -134,6 +134,9 @@ export default class ProductDetails {
                 const attributesData = response.data || {};
                 const attributesContent = response.content || {};
                 this.updateProductAttributes(attributesData);
+
+                console.log(response.data);
+
                 if (hasDefaultOptions) {
                     this.updateView(attributesData, attributesContent);
                 } else {

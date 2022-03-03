@@ -1,4 +1,6 @@
 /* eslint-disable linebreak-style */
+const productOptionsObj = {};
+
 const plexObj = {
     limit: 4,
     current: 0,
@@ -43,70 +45,80 @@ const showError = (errorId, errorType, errorMessage) => {
     currentError.classList.remove('warning');
 
     currentError.classList.add(errorType);
-    currentError.innerHTML = errorMessage;
+    currentError.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${errorMessage}`;
     currentError.classList.remove('hide');
 
     setTimeout(() => {
         currentError.classList.add('hide');
-    }, 3000);
+    }, 4000);
 };
 
 // eslint-disable-next-line no-unused-vars
 const addtoQuote = () => {
-    if (Object.keys(plexObj.pleximisationFees).length > 0) {
-        const productObject = {
-            id: document.querySelector('#pleximisation-product-id').value,
-            imageURL: document.querySelector('#pleximisation-product-image').value,
-            brand: document.querySelector('#pleximisation-product-brand').value,
-            title: document.querySelector('#pleximisation-product-title').value,
-            productURL: document.querySelector('#pleximisation-product-url').value,
-            sku: document.querySelector('[data-product-sku]').innerHTML,
-        };
-
-        const toAddObject = {
-            'product-id': productObject.id,
-            'product-image-url': productObject.imageURL,
-            'product-brand': productObject.brand,
-            'product-title': productObject.title,
-            'product-url': productObject.productURL,
-            'product-sku': productObject.sku,
-
-            'price-per-unit': plexObj.orderPPU,
-            'setup-fees': plexObj.orderSetup,
-            quantity: plexObj.orderQty,
-            total: plexObj.orderTotal,
-
-            pleximisations: [],
-            variations: [],
-        };
-
-        let currentOption;
-        let currentOptionTitle;
-        const variationsData = document.querySelectorAll('[data-product-variation]');
-
-        for (let x = 0; x < variationsData.length; x++) {
-            currentOptionTitle = variationsData[x].getAttribute('id').slice('pleximisation-product-'.length);
-            currentOption = variationsData[x].value;
-
-            toAddObject.variations.push([currentOptionTitle, currentOption]);
+    for (let item in Object.keys(productOptionsObj)) {
+        if (productOptionsObj[item][1] === null) {
+            showError('pleximisation-quote-message', 'warning', 'Please complete all options.');
+            return;
         }
-
-        let x = 1;
-
-        for (const item in plexObj.pleximisationFees) {
-            if (Object.keys(plexObj.pleximisationFees).length > 0) {
-                toAddObject.pleximisations.push([x, plexObj.pleximisationFees[item][2]]);
-                x++;
-            }
-        }
-
-        const cartItemID = `PXciID${generateRandomID()}`;
-
-        localStorage.setItem(cartItemID, JSON.stringify(toAddObject));
-        window.location.href = '/cart.php';
-    } else {
-        showError('pleximisation-quote-message', 'danger', 'Oops! You forgot to choose a customisation.');
     }
+
+    console.log(Object.values(plexObj.pleximisationFees)[3]);
+
+    if (Object.keys(plexObj.pleximisationFees).length === 0 || Object.values(plexObj.pleximisationFees)[3] === undefined) {
+        showError('pleximisation-quote-message', 'warning', 'Oops! You forgot to choose a customisation.');
+        return;
+    }
+
+    const productObject = {
+        id: document.querySelector('#pleximisation-product-id').value,
+        imageURL: document.querySelector('#pleximisation-product-image').value,
+        brand: document.querySelector('#pleximisation-product-brand').value,
+        title: document.querySelector('#pleximisation-product-title').value,
+        productURL: document.querySelector('#pleximisation-product-url').value,
+        sku: document.querySelector('[data-product-sku]').innerHTML,
+    };
+
+    const toAddObject = {
+        'product-id': productObject.id,
+        'product-image-url': productObject.imageURL,
+        'product-brand': productObject.brand,
+        'product-title': productObject.title,
+        'product-url': productObject.productURL,
+        'product-sku': productObject.sku,
+
+        'price-per-unit': plexObj.orderPPU,
+        'setup-fees': plexObj.orderSetup,
+        quantity: plexObj.orderQty,
+        total: plexObj.orderTotal,
+
+        pleximisations: [],
+        variations: [],
+    };
+
+    let currentOption;
+    let currentOptionTitle;
+    const variationsData = document.querySelectorAll('[data-product-variation]');
+
+    for (let x = 0; x < variationsData.length; x++) {
+        currentOptionTitle = variationsData[x].getAttribute('id').slice('pleximisation-product-'.length);
+        currentOption = variationsData[x].value;
+
+        toAddObject.variations.push([currentOptionTitle, currentOption]);
+    }
+
+    let x = 1;
+
+    for (const item in plexObj.pleximisationFees) {
+        if (Object.keys(plexObj.pleximisationFees).length > 0) {
+            toAddObject.pleximisations.push([x, plexObj.pleximisationFees[item][2]]);
+            x++;
+        }
+    }
+
+    const cartItemID = `PXciID${generateRandomID()}`;
+
+    localStorage.setItem(cartItemID, JSON.stringify(toAddObject));
+    window.location.href = '/cart.php';
 };
 
 const addPleximisation = () => {
@@ -381,5 +393,19 @@ window.addEventListener('load', () => {
         document.querySelectorAll('.form-increment .button.button--icon')[i].addEventListener('click', () => {
             updateChargesBlock();
         });
+    }
+
+    for (let x = 0; x < document.querySelectorAll('.form-field[data-product-attribute]').length; x++) {
+        productOptionsObj[x] = [document.querySelectorAll('.form-field[data-product-attribute]')[x], null];
+    }
+});
+
+window.stencilUtils.hooks.on('product-option-change', (event, currentTarget) => {
+    const optionParent = currentTarget.parentElement;
+
+    for (let item in Object.keys(productOptionsObj)) {
+        if (optionParent == productOptionsObj[item][0]) {
+            productOptionsObj[item][1] = 1;
+        }
     }
 });
