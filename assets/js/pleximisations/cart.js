@@ -95,7 +95,7 @@ const updateCart = () => {
                     <td class="cart-item-block cart-item-info cart-item-quantity">
                         <span class="cart-item-label">Total</span>
                         <span class="cart-item-value">$${currentItem.total}</span>
-                        <a class="" href="#" data-pleximisation-id=${cartItems[item]}>
+                        <a class="cart-item-delete" href="#" data-pleximisation-id='${cartItems[item]}' onclick='removeFromQuote("${cartItems[item]}");'>
                             <i class="fa-solid fa-trash-can" id="quote-delete-icon"></i>
                         </a>
                     </td>
@@ -109,6 +109,8 @@ const updateCart = () => {
             quoteTotal += floatTotal * 1.1;
         }
     }
+
+    document.querySelector('[data-cart-page-title]').innerHTML = `Your Cart (${countCartItems()} items)`;
 
     document.querySelector('#pleximimsation-quote-list').innerHTML = itemListHTML;
     document.querySelector('#pleximisation-totals-subtotal span').innerHTML = `$${quoteSubTotal.toFixed(2)}`;
@@ -356,12 +358,4 @@ window.addEventListener('load', () => {
     }
 
     updateCart();
-    document.querySelector('[data-cart-page-title]').innerHTML = `Your Cart (${countCartItems()} items)`;
-
-    for (let i = 0; i < document.querySelectorAll('[data-pleximisation-id]').length; i++) {
-        document.querySelectorAll('[data-pleximisation-id]')[i].addEventListener('click', () => {
-            const thisId = document.querySelectorAll('[data-pleximisation-id]')[i].dataset.pleximisationId;
-            removeFromQuote(thisId);
-        });
-    }
 });

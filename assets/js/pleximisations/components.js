@@ -62,11 +62,16 @@ const addtoQuote = () => {
         }
     }
 
-    console.log(Object.values(plexObj.pleximisationFees)[3]);
-
-    if (Object.keys(plexObj.pleximisationFees).length === 0 || Object.values(plexObj.pleximisationFees)[3] === undefined) {
+    if (Object.keys(plexObj.pleximisationFees).length === 0) {
         showError('pleximisation-quote-message', 'warning', 'Oops! You forgot to choose a customisation.');
         return;
+    }
+
+    for (let item in plexObj.pleximisationFees) {
+        if (plexObj.pleximisationFees[item].length < 3 || plexObj.pleximisationFees[item][2] === undefined) {
+            showError('pleximisation-quote-message', 'warning', 'Oops! You forgot to choose a customisation.');
+            return;
+        }
     }
 
     const productObject = {

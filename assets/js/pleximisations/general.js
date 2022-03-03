@@ -1,5 +1,7 @@
 /* eslint-disable linebreak-style */
-const countCartItems = () => {
+window.addEventListener('load', () => {
+    const cartNavElement = document.querySelector('#pleximisation-nav-cart');
+
     const cartItems = Object.keys(localStorage);
     let cartTotal = 0;
 
@@ -9,17 +11,10 @@ const countCartItems = () => {
         }
     }
 
-    return cartTotal;
-};
-
-window.addEventListener('load', () => {
-    const cartNavElement = document.querySelector('#pleximisation-nav-cart');
-    const cartCount = countCartItems();
-
     if (cartNavElement) {
         const cartPill = document.querySelector('#pleximisation-nav-cart .pleximisation-countPill');
 
-        if (cartCount === 0) {
+        if (cartTotal === 0) {
             if (cartPill.classList.contains('pleximisation-countPill--positive')) {
                 cartPill.classList.remove('pleximisation-countPill--positive');
             }
@@ -28,7 +23,7 @@ window.addEventListener('load', () => {
                 cartPill.classList.add('pleximisation-countPill--positive');
             }
 
-            cartPill.innerHTML = cartCount;
+            cartPill.innerHTML = cartTotal;
         }
     }
 });
