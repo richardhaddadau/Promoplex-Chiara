@@ -55,7 +55,7 @@ const showError = (errorId, errorType, errorMessage) => {
 
 // eslint-disable-next-line no-unused-vars
 const addtoQuote = () => {
-    for (let item in Object.keys(productOptionsObj)) {
+    for (const item in Object.keys(productOptionsObj)) {
         if (productOptionsObj[item][1] === null) {
             showError('pleximisation-quote-message', 'warning', 'Please complete all options.');
             return;
@@ -67,7 +67,7 @@ const addtoQuote = () => {
         return;
     }
 
-    for (let item in plexObj.pleximisationFees) {
+    for (const item in plexObj.pleximisationFees) {
         if (plexObj.pleximisationFees[item].length < 3 || plexObj.pleximisationFees[item][2] === undefined) {
             showError('pleximisation-quote-message', 'warning', 'Oops! You forgot to choose a customisation.');
             return;
@@ -408,8 +408,8 @@ window.addEventListener('load', () => {
 window.stencilUtils.hooks.on('product-option-change', (event, currentTarget) => {
     const optionParent = currentTarget.parentElement;
 
-    for (let item in Object.keys(productOptionsObj)) {
-        if (optionParent == productOptionsObj[item][0]) {
+    for (const item in Object.keys(productOptionsObj)) {
+        if (optionParent === productOptionsObj[item][0]) {
             productOptionsObj[item][1] = 1;
         }
     }
