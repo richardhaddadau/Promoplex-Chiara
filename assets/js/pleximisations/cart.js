@@ -15,6 +15,14 @@ const countCartItems = () => {
 };
 
 const updateCart = () => {
+    if (countCartItems() > 0) {
+        document.querySelector('#pleximisation-cart-wrapper').style.display = 'block';
+        document.querySelector('#pleximisation-empty-cart-wrapper').style.display = 'none';
+    } else {
+        document.querySelector('#pleximisation-cart-wrapper').style.display = 'none';
+        document.querySelector('#pleximisation-empty-cart-wrapper').style.display = 'block';
+    }
+
     const cartItems = Object.keys(localStorage);
     let currentItem;
 
@@ -23,14 +31,6 @@ const updateCart = () => {
     let quoteSubTotal = 0;
     let quoteTax = 0;
     let quoteTotal = 0;
-
-    if (countCartItems() > 0) {
-        document.querySelector('#pleximisation-cart-wrapper').style.display = 'block';
-        document.querySelector('#pleximisation-empty-cart-wrapper').style.display = 'none';
-    } else {
-        document.querySelector('#pleximisation-cart-wrapper').style.display = 'none';
-        document.querySelector('#pleximisation-empty-cart-wrapper').style.display = 'block';
-    }
 
     for (const item in cartItems) {
         if (cartItems[item].slice(0, 6) === 'PXciID') {
@@ -116,6 +116,27 @@ const updateCart = () => {
     document.querySelector('#pleximisation-totals-subtotal span').innerHTML = `$${quoteSubTotal.toFixed(2)}`;
     document.querySelector('#pleximisation-totals-tax span').innerHTML = `$${quoteTax.toFixed(2)}`;
     document.querySelector('#pleximisation-totals-total span').innerHTML = `$${quoteTotal.toFixed(2)}`;
+
+    // Update Cart Icon in Nav
+    const cartNavElement = document.querySelector('#pleximisation-nav-cart');
+
+    if (cartNavElement) {
+        const cartPill = document.querySelector('#pleximisation-nav-cart .pleximisation-countPill');
+
+        const cartTotal = countCartItems();
+
+        if (cartTotal === 0) {
+            if (cartPill.classList.contains('pleximisation-countPill--positive')) {
+                cartPill.classList.remove('pleximisation-countPill--positive');
+            }
+        } else {
+            if (!cartPill.classList.contains('pleximisation-countPill--positive')) {
+                cartPill.classList.add('pleximisation-countPill--positive');
+            }
+
+            cartPill.innerHTML = cartTotal;
+        }
+    }
 };
 
 const removeFromQuote = (storageID) => {
